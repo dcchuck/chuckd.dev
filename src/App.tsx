@@ -40,7 +40,6 @@ const HomeScreen = () =>
     </div>
     <div className="Details">
       <div className="NavDesktop">
-        <User />
         <Github />
       </div>
       <h5 className="Gig">developer</h5>
