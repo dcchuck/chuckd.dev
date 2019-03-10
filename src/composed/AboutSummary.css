@@ -1,0 +1,30 @@
+.AboutSummary {
+}
+
+.AboutSummaryWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.AboutSectionHeader {
+  font-family: 'Fredoka One', cursive;
+  display: flex;
+  margin: 1rem 2rem;
+  font-size: 1.25rem;
+  border-bottom: 0.125rem solid #9f021e;
+  color: #9f021e;
+}
+
+.AboutLogosContainer {
+  display: flex;
+  margin: 1rem 2rem;
+  justify-content: flex-end;
+}
+
+.AboutSectionTitle {
+  margin: 1rem 2rem;
+  font-size: 2rem;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+

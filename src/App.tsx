@@ -1,36 +1,23 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Logo from './elements/Logo';
+import {
+  GithubLink,
+  AboutLink,
+  HomeLink,
+} from './nav'
+
+import About from './pages/About'
 
 /**
  * icons
  */
-import home from './home.svg';
-import github from './github.svg';
-import user from './user.svg';
-
-import { languages, tools } from './logos'
+import { languages, services } from './logos'
 
 /**
  * stylesheet
  */
 import './App.css';
-
-const Home = () =>
-  <Link to="/">
-    <img src={home} className="Icon" />
-  </Link>
-
-const Github = () =>
-  <a
-    href="https://github.com/dcchuck"
-  >
-    <img src={github} className="Icon" />
-  </a>
-
-const User = () =>
-  <Link to="/about">
-    <img src={user} className="Icon" />
-  </Link>
 
 const HomeScreen = () =>
   <div className="App">
@@ -40,52 +27,15 @@ const HomeScreen = () =>
     </div>
     <div className="Details">
       <div className="NavDesktop">
-        <Github />
+        <GithubLink />
+        <AboutLink />
       </div>
       <h5 className="Gig">developer</h5>
       <div className="NavMobile">
-        <Github />
+        <GithubLink />
+        <AboutLink />
       </div>
     </div>
-  </div>
-
-const SummarySectionTitle = (props: any) =>
-  <div className="SummarySectionTitle">{props.children}</div>
-
-const SummarySection = (props: any) =>
-  <div className="SummarySection">{props.children}</div>
-
-const Logo = (props: any) => <img className="Logo" src={props.src} />
-
-const ToolLogos = () => languages.map(( e, i ) => <Logo src={e} key={i} />)
-const LanguageLogos = () => tools.map(( e, i ) => <Logo src={e} key={i} />)
-
-const AboutNav = () =>
-  <div className="AboutHeader">
-    <div className="AboutTitle">ChuckD</div>
-    <div className="AboutNav"><Home /></div>
-  </div>
-
-const Summary = () =>
-  <div className="Summary">
-    <SummarySectionTitle>
-      Enjoys building things in languages like...
-    </SummarySectionTitle>
-    <SummarySection>
-      { LanguageLogos() }
-    </SummarySection>
-    <SummarySectionTitle>
-      Leveraging tools and frameworks like...
-    </SummarySectionTitle>
-    <SummarySection>
-      { ToolLogos() }
-    </SummarySection>
-  </div>
-
-const About = () =>
-  <div className="About">
-    <AboutNav />
-    <Summary />
   </div>
 
 class App extends Component {

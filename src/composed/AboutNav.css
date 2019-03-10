@@ -1,0 +1,19 @@
+.AboutNav {
+  display: flex;
+  justify-content: space-between;
+  background-color: #9f021e;
+  color: white;
+}
+
+.AboutNavName {
+  font-size: 3rem;
+  padding-left: 4vw;
+  font-family: 'Fredoka One', cursive;
+}
+
+.AboutNavNav {
+  display: flex;
+  align-items: center;
+  padding-right: 4vw;
+}
+
