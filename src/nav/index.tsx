@@ -19,9 +19,14 @@ const NavIcon = (props: INavIconProps) =>
     <img src={props.src} className="Icon" />
   </Link>
 
+const Anchor = (props: INavIconProps) =>
+  <a href={props.route}>
+    <img src={props.src} className="Icon" />
+  </a>
+
 const HomeLink = () => <NavIcon src={home} route="/" />
 
-const GithubLink = () => <NavIcon src={github} route={githubUrl} />
+const GithubLink = () => <Anchor src={github} route={githubUrl} />
 
 const AboutLink = () => <NavIcon src={user} route="/about" />
 
