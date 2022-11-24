@@ -29,11 +29,7 @@ const HomeScreen = () =>
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div>
-          <Route path="/" exact component={HomeScreen} />
-        </div>
-      </Router>
+      <HomeScreen />
     );
   }
 }
