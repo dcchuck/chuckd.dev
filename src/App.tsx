@@ -1,3 +1,3 @@
-import { Home } from './pages/Home';
+import { Home } from "./pages/Home";
 
-export const App = () => <Home />
+export const App = () => <Home />;
