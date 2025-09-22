@@ -11,7 +11,7 @@ const SmallScreenHyphen = () => <span className="sm:hidden">-</span>;
 const SmallScreenBreak = () => <br className="sm:hidden" />;
 
 export const Home = () => (
-  <div className="bg-seafoamgreen h-screen p-8">
+  <div className="bg-seafoamgreen h-dvh p-8">
     <h1 className="text-9xl font-title text-white">
       Chuck
       <br />
