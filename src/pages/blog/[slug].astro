@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import '../../styles/global.css';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -22,11 +24,13 @@ const { Content } = await render(post);
 		<meta name="generator" content={Astro.generator} />
 		<title>{post.data.title} - Chuck Danielson</title>
 	</head>
-	<body>
-		<article>
-			<h1>{post.data.title}</h1>
-			<time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString()}</time>
-			<Content />
-		</article>
+	<body class="bg-black min-h-dvh flex flex-col">
+		<Header breadcrumbs={[{ label: "blog", href: "/blog" }, { label: post.data.title }]} />
+		<main class="flex-1 px-8">
+			<article class="text-white font-mono prose prose-invert prose-sm max-w-none">
+				<Content />
+			</article>
+		</main>
+		<Footer />
 	</body>
 </html>
