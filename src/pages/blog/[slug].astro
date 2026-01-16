@@ -1,0 +1,32 @@
+---
+import { getCollection, render } from 'astro:content';
+import '../../styles/global.css';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: { post },
+	}));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{post.data.title} - Chuck Danielson</title>
+	</head>
+	<body>
+		<article>
+			<h1>{post.data.title}</h1>
+			<time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString()}</time>
+			<Content />
+		</article>
+	</body>
+</html>
