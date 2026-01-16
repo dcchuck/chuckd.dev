@@ -1,0 +1,29 @@
+---
+import '../styles/global.css'
+import githubIcon from '../assets/github.svg'
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Chuck Danielson</title>
+	</head>
+	<body>
+		<div class="bg-seafoamgreen h-dvh p-8 overflow-x-hidden">
+			<h1
+				class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-title text-white break-words hyphens-manual"
+				lang="en"
+			>
+				Chuck Dan&shy;iels&shy;on
+			</h1>
+			<div class="flex justify-end">
+				<a href="https://github.com/dcchuck" target="_blank">
+					<img src={githubIcon.src} alt="GitHub" />
+				</a>
+			</div>
+		</div>
+	</body>
+</html>
