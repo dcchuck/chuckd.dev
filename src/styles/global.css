@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-title: Fredoka One;
+  --color-seafoamgreen: #99f6e4;
+}

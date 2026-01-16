@@ -1,25 +1,16 @@
 {
-  "name": "chuckd",
-  "private": true,
-  "version": "0.2.0",
+  "name": "awesome-asteroid",
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "react": "19.1.1",
-    "react-dom": "19.1.1"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.13",
-    "@types/react": "19.1.13",
-    "@types/react-dom": "19.1.9",
-    "@vitejs/plugin-react": "4.3.4",
-    "postcss": "8.5.3",
-    "tailwindcss": "^4.1.13",
-    "typescript": "5.7.3",
-    "vite": "^6.3.6"
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.16.9",
+    "tailwindcss": "^4.1.18"
   }
 }
