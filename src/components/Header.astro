@@ -1,0 +1,23 @@
+---
+interface Props {
+  breadcrumbs: Array<{ label: string; href?: string }>;
+}
+
+const { breadcrumbs } = Astro.props;
+---
+
+<header class="p-8 pb-4">
+  <nav class="font-title text-white">
+    <a href="/" class="hover:text-seafoamgreen" title="Home">&#x1F480;</a>
+    {breadcrumbs.map((crumb, index) => (
+      <>
+        <span class="mx-2">/</span>
+        {crumb.href ? (
+          <a href={crumb.href} class="hover:text-seafoamgreen">{crumb.label}</a>
+        ) : (
+          <span>{crumb.label}</span>
+        )}
+      </>
+    ))}
+  </nav>
+</header>

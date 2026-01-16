@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
 ---
 
 <html lang="en">
@@ -10,11 +12,11 @@ import '../styles/global.css'
 		<meta name="generator" content={Astro.generator} />
 		<title>About - Chuck Danielson</title>
 	</head>
-	<body>
-		<div class="bg-black min-h-dvh p-8">
-			<h1 class="text-4xl font-title text-white mb-4">About</h1>
-			<p class="text-white">Coming soon.</p>
-			<a href="/" class="text-white font-title mt-4 inline-block">← home</a>
-		</div>
+	<body class="bg-black min-h-dvh flex flex-col">
+		<Header breadcrumbs={[{ label: "about" }]} />
+		<main class="flex-1 px-8">
+			<p class="text-white font-mono">Coming soon.</p>
+		</main>
+		<Footer />
 	</body>
 </html>
