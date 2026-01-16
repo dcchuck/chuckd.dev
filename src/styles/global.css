@@ -1,7 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Goonies';
+  src: url('/fonts/Goonies.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
-  --font-title: Fredoka One;
+  --font-title: Goonies;
   --color-seafoamgreen: #99f6e4;
 }

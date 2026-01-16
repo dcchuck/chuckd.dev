@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css'
-import githubIcon from '../assets/github.svg'
 ---
 
 <html lang="en">
@@ -12,17 +11,16 @@ import githubIcon from '../assets/github.svg'
 		<title>Chuck Danielson</title>
 	</head>
 	<body>
-		<div class="bg-seafoamgreen h-dvh p-8 overflow-x-hidden">
-			<h1
-				class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-title text-white break-words hyphens-manual"
-				lang="en"
-			>
-				Chuck Dan&shy;iels&shy;on
+		<div class="bg-black h-dvh flex flex-col items-center justify-center">
+			<h1 class="text-5xl font-title text-white text-center leading-tight">
+				<span class="text-[1.25em]">C</span>huck<br /><span class="text-[1.25em]">D</span>anielsson
 			</h1>
-			<div class="flex justify-end">
-				<a href="https://github.com/dcchuck" target="_blank" rel="noopener noreferrer">
-					<img src={githubIcon.src} alt="GitHub" />
-				</a>
+			<div class="mt-4 text-white font-title">
+				<a href="https://github.com/dcchuck" target="_blank" rel="noopener noreferrer">github</a>
+				<span class="mx-2">*</span>
+				<a href="/blog">blog</a>
+				<span class="mx-2">*</span>
+				<a href="/about">about</a>
 			</div>
 		</div>
 	</body>
