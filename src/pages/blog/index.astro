@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import '../../styles/global.css';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Blog - Chuck Danielson</title>
+  </head>
+  <body>
+    <h1>Blog</h1>
+    <ul>
+      {sortedPosts.map((post) => (
+        <li>
+          <a href={`/blog/${post.id}`}>{post.data.title}</a>
+          <time>{post.data.date.toLocaleDateString()}</time>
+        </li>
+      ))}
+    </ul>
+  </body>
+</html>
