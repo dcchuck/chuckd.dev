@@ -8,7 +8,7 @@ const { breadcrumbs } = Astro.props;
 
 <header class="p-8 pb-4">
   <nav class="font-title text-white">
-    <a href="/" class="hover:text-seafoamgreen" title="Home">&#x1F480;</a>
+    <a href="/" class="hover:underline" aria-label="Home">*</a>
     {breadcrumbs.map((crumb, index) => (
       <>
         <span class="mx-2">/</span>
