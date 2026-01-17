@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css'
+import ThemeScript from '../components/ThemeScript.astro'
 ---
 
 <html lang="en">
@@ -9,13 +10,14 @@ import '../styles/global.css'
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Chuck Danielson</title>
+		<ThemeScript />
 	</head>
 	<body>
-		<div class="bg-black h-dvh flex flex-col items-center justify-center">
-			<h1 class="text-5xl font-title text-white text-center leading-tight">
+		<div class="h-dvh flex flex-col items-center justify-center" style="background-color: var(--color-bg);">
+			<h1 class="text-5xl font-title text-center leading-tight" style="color: var(--color-fg);">
 				<span class="text-[1.25em]">C</span>huck<br /><span class="text-[1.25em]">D</span>anielsson
 			</h1>
-			<div class="mt-4 text-white font-title">
+			<div class="mt-4 font-title" style="color: var(--color-fg);">
 				<a href="/blog" class="hover:underline">blog</a>
 				<span class="mx-2">*</span>
 				<a href="/about" class="hover:underline">about</a>

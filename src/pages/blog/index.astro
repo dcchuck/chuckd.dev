@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import '../../styles/global.css';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import ThemeScript from '../../components/ThemeScript.astro';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -15,16 +16,17 @@ const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.get
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Blog - Chuck Danielson</title>
+		<ThemeScript />
 	</head>
-	<body class="bg-black min-h-dvh flex flex-col">
+	<body class="min-h-dvh flex flex-col" style="background-color: var(--color-bg);">
 		<Header breadcrumbs={[{ label: "blog" }]} />
 		<main class="flex-1 px-8">
-			<h1 class="text-2xl font-title text-white mb-6">Posts</h1>
+			<h1 class="text-2xl font-title mb-6" style="color: var(--color-fg);">Posts</h1>
 			<ul class="space-y-2">
 				{sortedPosts.map((post) => (
 					<li class="flex justify-between items-baseline">
-						<a href={`/blog/${post.id}`} class="text-white font-mono hover:text-seafoamgreen">{post.data.title}</a>
-						<time datetime={post.data.date.toISOString()} class="text-white font-mono text-sm ml-4">
+						<a href={`/blog/${post.id}`} class="font-mono hover:text-seafoamgreen" style="color: var(--color-fg);">{post.data.title}</a>
+						<time datetime={post.data.date.toISOString()} class="font-mono text-sm ml-4" style="color: var(--color-fg);">
 							{post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
 						</time>
 					</li>

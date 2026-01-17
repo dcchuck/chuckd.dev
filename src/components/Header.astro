@@ -1,4 +1,6 @@
 ---
+import Menu from './Menu.astro';
+
 interface Props {
   breadcrumbs: Array<{ label: string; href?: string }>;
 }
@@ -7,17 +9,20 @@ const { breadcrumbs } = Astro.props;
 ---
 
 <header class="p-8 pb-4">
-  <nav class="font-title text-white">
-    <a href="/" class="hover:underline" aria-label="Home">*</a>
-    {breadcrumbs.map((crumb, index) => (
-      <>
-        <span class="mx-2">/</span>
-        {crumb.href ? (
-          <a href={crumb.href} class="hover:text-seafoamgreen">{crumb.label}</a>
-        ) : (
-          <span>{crumb.label}</span>
-        )}
-      </>
-    ))}
+  <nav class="font-title flex justify-between items-center" style="color: var(--color-fg);">
+    <div>
+      <a href="/" class="hover:underline" aria-label="Home">*</a>
+      {breadcrumbs.map((crumb, index) => (
+        <>
+          <span class="mx-2">/</span>
+          {crumb.href ? (
+            <a href={crumb.href} class="hover:text-seafoamgreen">{crumb.label}</a>
+          ) : (
+            <span>{crumb.label}</span>
+          )}
+        </>
+      ))}
+    </div>
+    <Menu />
   </nav>
 </header>

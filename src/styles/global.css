@@ -13,3 +13,38 @@
   --font-mono: "SF Mono", ui-monospace, SFMono-Regular, "Roboto Mono", Menlo, Monaco, Consolas, monospace;
   --color-seafoamgreen: #99f6e4;
 }
+
+/* Theme colors - dark mode by default */
+:root {
+  --color-bg: #000000;
+  --color-fg: #ffffff;
+}
+
+html[data-theme="light"] {
+  --color-bg: #ffffff;
+  --color-fg: #000000;
+}
+
+/* Prose colors - default to dark mode */
+.prose {
+  --tw-prose-body: #ffffff;
+  --tw-prose-headings: #ffffff;
+  --tw-prose-links: #ffffff;
+  --tw-prose-bold: #ffffff;
+  --tw-prose-code: #ffffff;
+  --tw-prose-quotes: #ffffff;
+  --tw-prose-pre-bg: #1a1a1a;
+  --tw-prose-pre-code: #ffffff;
+}
+
+/* Override prose colors for light mode */
+html[data-theme="light"] .prose {
+  --tw-prose-body: #000000;
+  --tw-prose-headings: #000000;
+  --tw-prose-links: #000000;
+  --tw-prose-bold: #000000;
+  --tw-prose-code: #000000;
+  --tw-prose-quotes: #000000;
+  --tw-prose-pre-bg: #f3f4f6;
+  --tw-prose-pre-code: #000000;
+}
