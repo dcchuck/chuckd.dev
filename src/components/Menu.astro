@@ -1,0 +1,54 @@
+---
+---
+
+<div class="relative inline-block">
+  <button
+    id="menu-button"
+    class="font-title hover:text-seafoamgreen cursor-pointer"
+    style="color: var(--color-fg);"
+    aria-expanded="false"
+    aria-haspopup="true"
+  >
+    menu
+  </button>
+  <div
+    id="menu-dropdown"
+    class="hidden absolute right-0 mt-2 py-2 px-4 border z-50 font-mono text-sm whitespace-nowrap"
+    style="background-color: var(--color-bg); border-color: var(--color-fg);"
+  >
+    <button
+      id="toggle-theme-btn"
+      class="hover:text-seafoamgreen cursor-pointer"
+      style="color: var(--color-fg);"
+    >
+      Toggle Theme
+    </button>
+  </div>
+</div>
+
+<script>
+  const menuButton = document.getElementById('menu-button');
+  const menuDropdown = document.getElementById('menu-dropdown');
+  const toggleThemeBtn = document.getElementById('toggle-theme-btn');
+
+  menuButton?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isHidden = menuDropdown?.classList.contains('hidden');
+    menuDropdown?.classList.toggle('hidden', !isHidden);
+    menuButton?.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+  });
+
+  toggleThemeBtn?.addEventListener('click', () => {
+    if (typeof window.toggleTheme === 'function') {
+      window.toggleTheme();
+    }
+    menuDropdown?.classList.add('hidden');
+    menuButton?.setAttribute('aria-expanded', 'false');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', () => {
+    menuDropdown?.classList.add('hidden');
+    menuButton?.setAttribute('aria-expanded', 'false');
+  });
+</script>
