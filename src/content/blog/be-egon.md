@@ -1,8 +1,8 @@
 ---
 title: Be Egon
-date: 2026-01-21
+date: 2026-02-05
 description: Lessons about AI assisted development from 1984's Ghostbusters.
-draft: true
+draft: false
 ---
 
 # Be Egon
