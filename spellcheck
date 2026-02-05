@@ -1,0 +1,196 @@
+#!/usr/bin/env python3
+import readline  # noqa: F401 - enables keybindings for input()
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+BLOG_DIR = Path(__file__).parent / "src" / "content" / "blog"
+CUSTOM_DICT = Path(__file__).parent / ".aspell-words"
+ASPELL = "aspell"
+
+
+def is_aspell_available():
+    """Check if aspell is installed and available on PATH."""
+    return shutil.which(ASPELL) is not None
+
+
+def load_custom_words():
+    """Load custom dictionary words from .aspell-words file."""
+    if not CUSTOM_DICT.exists():
+        return set()
+    words = set()
+    for line in CUSTOM_DICT.read_text().splitlines():
+        word = line.strip()
+        if word and not word.startswith("#"):
+            words.add(word)
+    return words
+
+
+def get_misspelled_words(content):
+    """Run aspell list on content and return the set of misspelled words."""
+    result = subprocess.run(
+        [ASPELL, "list"],
+        input=content,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(f"Warning: aspell failed: {result.stderr.strip()}", file=sys.stderr)
+        return set()
+    return set(result.stdout.strip().splitlines()) if result.stdout.strip() else set()
+
+
+def map_words_to_lines(content, words):
+    """Map misspelled words to their line numbers in the content."""
+    issues = []
+    lines = content.splitlines()
+    for lineno, line in enumerate(lines, 1):
+        for word in words:
+            if re.search(r"\b" + re.escape(word) + r"\b", line):
+                issues.append((lineno, word))
+    return issues
+
+
+def get_suggestions(words):
+    """Get spelling suggestions for each word via aspell pipe."""
+    if not words:
+        return {}
+    input_text = "\n".join(words)
+    result = subprocess.run(
+        [ASPELL, "pipe"],
+        input=input_text,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(f"Warning: aspell pipe failed: {result.stderr.strip()}", file=sys.stderr)
+        return {}
+    suggestions = {}
+    for line in result.stdout.splitlines():
+        if line.startswith("@(#)"):
+            continue
+        if line.startswith("&"):
+            # Format: & word count offset: suggestion1, suggestion2, ...
+            parts = line.split(": ", 1)
+            word = line.split()[1]
+            suggs = [s.strip() for s in parts[1].split(",")] if len(parts) > 1 else []
+            suggestions[word] = suggs[:5]
+        elif line.startswith("#"):
+            # No suggestions
+            word = line.split()[1]
+            suggestions[word] = []
+        # Skip * (correct) and blank lines
+    return suggestions
+
+
+def check_file(filepath, custom_words):
+    """Check a single file for spelling issues.
+
+    Returns a list of (line_number, word, suggestions) tuples.
+    """
+    content = filepath.read_text()
+    misspelled = get_misspelled_words(content)
+    misspelled -= custom_words
+    if not misspelled:
+        return []
+
+    suggestions = get_suggestions(misspelled)
+    issues = map_words_to_lines(content, misspelled)
+
+    # Attach suggestions and sort by line number
+    results = []
+    for lineno, word in issues:
+        suggs = suggestions.get(word, [])
+        results.append((lineno, word, suggs))
+    results.sort(key=lambda x: (x[0], x[1]))
+    return results
+
+
+def check_files(filepaths):
+    """Check multiple files for spelling issues.
+
+    Returns a dict mapping filepath to list of (line_number, word, suggestions) tuples.
+    """
+    custom_words = load_custom_words()
+    results = {}
+    for filepath in filepaths:
+        issues = check_file(filepath, custom_words)
+        results[filepath] = issues
+    return results
+
+
+def print_report(results):
+    """Print the spell check report.
+
+    Returns total number of issues found.
+    """
+    total_issues = 0
+
+    print("Spell Check Report")
+    print("==================")
+
+    for filepath, issues in results.items():
+        relative = filepath.relative_to(Path(__file__).parent)
+        print(f"File: {relative}")
+
+        if not issues:
+            print("  No issues found.\n")
+            continue
+
+        print()
+        for lineno, word, suggs in issues:
+            if suggs:
+                sugg_str = ", ".join(suggs)
+                print(f'  Line {lineno}: "{word}" (suggestions: {sugg_str})')
+            else:
+                print(f'  Line {lineno}: "{word}" (no suggestions)')
+
+        print(f"\n{len(issues)} issues found.\n")
+        total_issues += len(issues)
+
+    return total_issues
+
+
+def prompt_user():
+    """Prompt the user to cancel or proceed. Returns exit code."""
+    print("[C]ancel and address  |  [P]roceed with known errors")
+    choice = input("> ").strip().lower()
+    if choice in ("p", "proceed"):
+        return 0
+    return 1
+
+
+def main():
+    if not is_aspell_available():
+        print(f"Error: '{ASPELL}' is not installed or not found on PATH.")
+        return 1
+
+    if len(sys.argv) > 1:
+        filepaths = [Path(arg).resolve() for arg in sys.argv[1:]]
+        for fp in filepaths:
+            if not fp.exists():
+                print(f"File not found: {fp}")
+                return 1
+    else:
+        filepaths = sorted(BLOG_DIR.glob("*.md"))
+        if not filepaths:
+            print("No blog posts found")
+            return 0
+
+    results = check_files(filepaths)
+    total = print_report(results)
+
+    if total == 0:
+        print("No spelling issues found!")
+        return 0
+
+    return prompt_user()
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except KeyboardInterrupt:
+        sys.exit(1)

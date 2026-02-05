@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import importlib.machinery
+import importlib.util
 import readline  # noqa: F401 - enables keybindings for input()
 import re
 import sys
@@ -6,6 +8,13 @@ from datetime import date
 from pathlib import Path
 
 BLOG_DIR = Path(__file__).parent / "src" / "content" / "blog"
+
+# Import spellcheck module (no .py extension)
+spellcheck_path = Path(__file__).parent / "spellcheck"
+loader = importlib.machinery.SourceFileLoader("spellcheck", str(spellcheck_path))
+spec = importlib.util.spec_from_loader("spellcheck", loader)
+spellcheck = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(spellcheck)
 
 
 def find_drafts():
@@ -58,6 +67,21 @@ def main():
         except ValueError:
             print("Invalid input")
             return
+
+    # Run spell check on selected posts
+    selected_filepaths = [drafts[i][0] for i in selected]
+    if not spellcheck.is_aspell_available():
+        print("Warning: aspell not installed, skipping spell check")
+    else:
+        results = spellcheck.check_files(selected_filepaths)
+        total_issues = sum(len(issues) for issues in results.values())
+
+        if total_issues > 0:
+            spellcheck.print_report(results)
+            exit_code = spellcheck.prompt_user()
+            if exit_code != 0:
+                print("Cancelled")
+                return
 
     for i in selected:
         filepath, title = drafts[i]

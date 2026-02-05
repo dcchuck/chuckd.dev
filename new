@@ -40,6 +40,8 @@ description: {description}
 draft: true
 ---
 
+# {title}
+
 """
 
     filepath.write_text(content)
