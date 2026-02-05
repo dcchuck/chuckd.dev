@@ -9,9 +9,9 @@ draft: true
 
 ## To the Point
 
-It is helpful to think of AI tooling some universal approximator. With that, point to your input before pointing to the tool when results are not as expcted.
+It is helpful to think of AI tooling some universal approximator. With that, point to your input before pointing to the tool when results are not as expected.
 
-"Garbage in, garbage out" as they say. Therefore, "perfect in, perfect out"? Obviously if youhave the perfect solution already you would not seek to improve it - but let's focus on something close to "perfect". If there *is* an input that can yield "perfect" output, your task is to devise that input.
+"Garbage in, garbage out" as they say. Therefore, "perfect in, perfect out"? Obviously if you have the perfect solution already you would not seek to improve it - but let's focus on something close to "perfect". If there *is* an input that can yield "perfect" output, your task is to devise that input.
 
 Finally - I support the use of AI tooling to generate this input. Decompose your problems.
 
@@ -27,7 +27,7 @@ After years of nothing, they finally stumble upon a real ghost at the New Your P
 
 They go into business for themselves. Their first job? They're after a green floating blob fans would come to know as "Slimer" in a luxury hotel meant to not be too far from the library. And this is where it happens.
 
-The crew assumbles in an elevator, geared up with very complex machinery we come to learn is capable of more or less total destruction. It's in this moment where they have a startling realization.
+The crew assembles in an elevator, geared up with very complex machinery we come to learn is capable of more or less total destruction. It's in this moment where they have a startling realization.
 
 ```
 Ray: You know, it just occurred to me that we really haven't had a successful test of this equipment.
@@ -43,7 +43,7 @@ In that moment that moment, chasing a solution to a problem that arguably only e
 
 In the movie they just keeping moving on of course. Everything goes well. There's a giant marshmallow man that attacks New York City - but ultimately this previously unproven technology prevails.
 
-We don't care about that part of the story. We're here for courageously pointing at yourself when things aren't perfect. You can always blame someone (or something) else. "It's a poor carpetner who blames his tools" as they say.
+We don't care about that part of the story. We're here for courageously pointing at yourself when things aren't perfect. You can always blame someone (or something) else. "It's a poor carpenter who blames his tools" as they say.
 
 In the case of Agentic software development, we take this lesson to our inputs. What did you give the agent?
 
