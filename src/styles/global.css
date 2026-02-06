@@ -11,7 +11,6 @@
 @theme {
   --font-title: Goonies;
   --font-mono: "SF Mono", ui-monospace, SFMono-Regular, "Roboto Mono", Menlo, Monaco, Consolas, monospace;
-  --color-seafoamgreen: #99f6e4;
 }
 
 /* Theme colors - dark mode by default */
