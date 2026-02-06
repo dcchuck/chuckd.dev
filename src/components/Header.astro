@@ -16,7 +16,7 @@ const { breadcrumbs } = Astro.props;
         <>
           <span class="mx-2">/</span>
           {crumb.href ? (
-            <a href={crumb.href} class="hover:text-seafoamgreen">{crumb.label}</a>
+            <a href={crumb.href} class="hover:underline">{crumb.label}</a>
           ) : (
             <span>{crumb.label}</span>
           )}
