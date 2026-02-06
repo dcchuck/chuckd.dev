@@ -28,7 +28,7 @@ const { Content } = await render(post);
 	</head>
 	<body class="min-h-dvh flex flex-col" style="background-color: var(--color-bg);">
 		<Header breadcrumbs={[{ label: "blog", href: "/blog" }, { label: post.data.title }]} />
-		<main class="flex-1 px-8">
+		<main class="flex-1 px-8 max-w-5xl mx-auto w-full">
 			<article class="font-mono prose prose-sm max-w-none" style="color: var(--color-fg);">
 				<Content />
 			</article>
