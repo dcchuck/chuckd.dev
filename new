@@ -42,6 +42,10 @@ draft: true
 
 # {title}
 
+## To the Point
+
+## With Humor
+
 """
 
     filepath.write_text(content)
