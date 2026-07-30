@@ -54,7 +54,7 @@ function linkLabel(projectName: string, brand: ProjectLinkBrand) {
           title={label}
           target="_blank"
           rel="noopener noreferrer"
-          class="rounded-sm p-1 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2"
+          class="project-link rounded-sm p-1 focus-visible:outline-2 focus-visible:outline-offset-2"
           style="color: var(--color-fg); outline-color: var(--color-fg);"
         >
           <BrandIcon brand={link.brand} />
@@ -63,3 +63,28 @@ function linkLabel(projectName: string, brand: ProjectLinkBrand) {
     })}
   </nav>
 </li>
+
+<style>
+  .project-link {
+    transition:
+      filter 150ms ease,
+      transform 150ms ease;
+  }
+
+  .project-link:hover,
+  .project-link:focus-visible {
+    filter: brightness(1.1);
+    transform: scale(1.08);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-link {
+      transition: none;
+    }
+
+    .project-link:hover,
+    .project-link:focus-visible {
+      transform: none;
+    }
+  }
+</style>

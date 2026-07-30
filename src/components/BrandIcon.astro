@@ -1,5 +1,7 @@
 ---
-import { siGithub, siHomebrew, siPypi } from 'simple-icons';
+import githubSvg from '../assets/brand-icons/github.svg?raw';
+import homebrewSvg from '../assets/brand-icons/homebrew.svg?raw';
+import pypiSvg from '../assets/brand-icons/pypi.svg?raw';
 import type { ProjectLinkBrand } from '../data/projects';
 
 interface Props {
@@ -7,19 +9,34 @@ interface Props {
 }
 
 const { brand } = Astro.props;
-const icons = {
-  github: siGithub,
-  homebrew: siHomebrew,
-  pypi: siPypi,
-} as const;
-const icon = icons[brand];
+const icons: Record<ProjectLinkBrand, string> = {
+  github: githubSvg,
+  homebrew: homebrewSvg,
+  pypi: pypiSvg,
+};
 ---
 
-<svg
-  class="size-5"
-  viewBox="0 0 24 24"
+<span
+  data-brand-icon={brand}
+  class:list={['brand-icon', `brand-icon--${brand}`]}
   aria-hidden="true"
-  focusable="false"
->
-  <path d={icon.path} fill="currentColor" />
-</svg>
+  set:html={icons[brand]}
+/>
+
+<style>
+  .brand-icon {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .brand-icon :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .brand-icon--github {
+    color: var(--color-fg);
+  }
+</style>

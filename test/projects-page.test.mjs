@@ -28,6 +28,23 @@ function assertAccessibleIconLink(html, href, label) {
   assert.equal(match[1].replace(/<[^>]+>/g, '').trim(), '');
 }
 
+function projectIconFragments(html, brand) {
+  const pattern = new RegExp(
+    `<span[^>]*data-brand-icon="${brand}"[^>]*>([\\s\\S]*?)<\\/span>`,
+    'g',
+  );
+
+  return [...html.matchAll(pattern)].map((match) => match[1]);
+}
+
+function fillColors(fragment) {
+  return new Set(
+    [...fragment.matchAll(/\bfill="(#[0-9a-f]{3,8})"/gi)].map((match) =>
+      match[1].toLowerCase(),
+    ),
+  );
+}
+
 test('projects page renders the initial project catalog and official links', async () => {
   const html = await readBuiltPage('projects/index.html');
 
@@ -77,6 +94,22 @@ test('projects page renders the initial project catalog and official links', asy
     html,
     'https://pypi.org/project/lbranch/',
     'View lbranch on PyPI',
+  );
+  const githubIcons = projectIconFragments(html, 'github');
+  const homebrewIcons = projectIconFragments(html, 'homebrew');
+  const pypiIcons = projectIconFragments(html, 'pypi');
+
+  assert.equal(githubIcons.length, 2);
+  assert.equal(homebrewIcons.length, 2);
+  assert.equal(pypiIcons.length, 1);
+  assert.ok(githubIcons.every((fragment) => fragment.includes('currentColor')));
+  assert.ok(
+    homebrewIcons.every((fragment) => fillColors(fragment).size >= 3),
+    'Homebrew artwork must retain multiple colors',
+  );
+  assert.ok(
+    pypiIcons.every((fragment) => fillColors(fragment).size >= 3),
+    'PyPI artwork must retain multiple colors',
   );
   const carGoCleanRow = html.match(
     /<li[^>]*data-project="car-go-clean"[^>]*>([\s\S]*?)<\/li>/,
