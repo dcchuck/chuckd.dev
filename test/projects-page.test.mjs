@@ -42,6 +42,16 @@ test('projects page renders the initial project catalog and official links', asy
     html,
     /A Git utility for listing recently checked-out branches and quickly switching between them\./,
   );
+  const projectHeadings = [
+    ...html.matchAll(
+      /<h2 class="([^"]+)"[^>]*>\s*(car-go-clean|lbranch)\s*<\/h2>/g,
+    ),
+  ];
+  assert.equal(projectHeadings.length, 2);
+  for (const [, classes] of projectHeadings) {
+    assert.match(classes, /\bfont-mono\b/);
+    assert.doesNotMatch(classes, /\bfont-title\b/);
+  }
 
   assertAccessibleIconLink(
     html,
