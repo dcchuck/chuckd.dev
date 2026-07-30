@@ -75,3 +75,12 @@ test('projects page renders the initial project catalog and official links', asy
   assert.doesNotMatch(carGoCleanRow[1], /data-project-link="pypi"/);
   assert.doesNotMatch(html, /crates\.io/);
 });
+
+test('homepage and shared footer link to projects', async () => {
+  const homeHtml = await readBuiltPage('index.html');
+  const projectsHtml = await readBuiltPage('projects/index.html');
+  const projectsLink = /<a[^>]*href="\/projects"[^>]*>projects<\/a>/;
+
+  assert.match(homeHtml, projectsLink);
+  assert.match(projectsHtml, projectsLink);
+});
