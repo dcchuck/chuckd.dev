@@ -1,0 +1,65 @@
+---
+import type { Project, ProjectLinkBrand } from '../data/projects';
+import BrandIcon from './BrandIcon.astro';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+
+const destinationNames: Record<ProjectLinkBrand, string> = {
+  github: 'GitHub',
+  homebrew: 'Homebrew formula',
+  pypi: 'PyPI',
+};
+
+function linkLabel(projectName: string, brand: ProjectLinkBrand) {
+  if (brand === 'homebrew') {
+    return `View ${projectName} ${destinationNames[brand]}`;
+  }
+
+  return `View ${projectName} on ${destinationNames[brand]}`;
+}
+---
+
+<li
+  data-project={project.name}
+  class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+>
+  <div class="min-w-0">
+    <h2 class="font-title text-lg" style="color: var(--color-fg);">
+      {project.name}
+    </h2>
+    <p
+      class="mt-1 max-w-2xl font-mono text-sm leading-relaxed"
+      style="color: var(--color-fg);"
+    >
+      {project.description}
+    </p>
+  </div>
+
+  <nav
+    aria-label={`${project.name} links`}
+    class="flex shrink-0 items-center gap-2"
+  >
+    {project.links.map((link) => {
+      const label = linkLabel(project.name, link.brand);
+
+      return (
+        <a
+          href={link.href}
+          data-project-link={link.brand}
+          aria-label={label}
+          title={label}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-sm p-1 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2"
+          style="color: var(--color-fg); outline-color: var(--color-fg);"
+        >
+          <BrandIcon brand={link.brand} />
+        </a>
+      );
+    })}
+  </nav>
+</li>

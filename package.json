@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "test": "npm run build && node --test test/*.test.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -12,6 +13,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.11",
+    "simple-icons": "16.27.1",
     "tailwindcss": "^4.1.18"
   }
 }

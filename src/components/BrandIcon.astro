@@ -1,0 +1,25 @@
+---
+import { siGithub, siHomebrew, siPypi } from 'simple-icons';
+import type { ProjectLinkBrand } from '../data/projects';
+
+interface Props {
+  brand: ProjectLinkBrand;
+}
+
+const { brand } = Astro.props;
+const icons = {
+  github: siGithub,
+  homebrew: siHomebrew,
+  pypi: siPypi,
+} as const;
+const icon = icons[brand];
+---
+
+<svg
+  class="size-5"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d={icon.path} fill="currentColor" />
+</svg>
