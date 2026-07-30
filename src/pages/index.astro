@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css'
+import FontPreload from '../components/FontPreload.astro'
 import ThemeScript from '../components/ThemeScript.astro'
 ---
 
@@ -10,6 +11,7 @@ import ThemeScript from '../components/ThemeScript.astro'
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Chuck Danielson</title>
+		<FontPreload />
 		<ThemeScript />
 	</head>
 	<body>

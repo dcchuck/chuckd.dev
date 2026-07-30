@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import '../../styles/global.css';
+import FontPreload from '../../components/FontPreload.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import ThemeScript from '../../components/ThemeScript.astro';
@@ -24,6 +25,7 @@ const { Content } = await render(post);
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{post.data.title} - Chuck Danielson</title>
+		<FontPreload />
 		<ThemeScript />
 	</head>
 	<body class="min-h-dvh flex flex-col" style="background-color: var(--color-bg);">
