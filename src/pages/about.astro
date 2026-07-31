@@ -1,26 +1,122 @@
 ---
-import '../styles/global.css'
-import FontPreload from '../components/FontPreload.astro'
-import Header from '../components/Header.astro'
-import Footer from '../components/Footer.astro'
-import ThemeScript from '../components/ThemeScript.astro'
+import { Image } from 'astro:assets';
+import portrait from '../assets/about/rotoscoped.png';
+import aiOneLogo from '../assets/brand-icons/ai-one.svg?raw';
+import Footer from '../components/Footer.astro';
+import FontPreload from '../components/FontPreload.astro';
+import Header from '../components/Header.astro';
+import ThemeScript from '../components/ThemeScript.astro';
+import '../styles/global.css';
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>About - Chuck Danielson</title>
-		<FontPreload />
-		<ThemeScript />
-	</head>
-	<body class="min-h-dvh flex flex-col" style="background-color: var(--color-bg);">
-		<Header breadcrumbs={[{ label: "about" }]} />
-		<main class="flex-1 px-8 max-w-5xl mx-auto w-full">
-			<p class="font-mono" style="color: var(--color-fg);">Coming soon.</p>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>About - Chuck Danielsson</title>
+    <FontPreload />
+    <ThemeScript />
+  </head>
+  <body
+    class="min-h-dvh flex flex-col"
+    style="background-color: var(--color-bg);"
+  >
+    <Header breadcrumbs={[{ label: 'about' }]} />
+    <main class="flex-1 px-8 max-w-5xl mx-auto w-full">
+      <article class="max-w-3xl">
+        <h1 class="text-2xl font-title" style="color: var(--color-fg);">
+          About
+        </h1>
+        <div class="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start">
+          <Image
+            src={portrait}
+            alt="Illustrated portrait of Chuck Danielsson"
+            width={240}
+            class="about-portrait w-full max-w-60 shrink-0"
+          />
+          <div
+            class="space-y-5 font-mono leading-relaxed"
+            style="color: var(--color-fg);"
+          >
+            <p>
+              I’m Chuck Danielsson. I work on software and the systems that
+              support it: how applications are built, delivered, observed, and
+              kept running. Most of my career has been in application
+              development, with a focus on delivery and user experience. To
+              me, user experience goes beyond the screen. It includes speed,
+              reliability, and everything behind the product.
+            </p>
+            <p>
+              Mathematics came before technology for me. I was drawn to both
+              by the same thing: questions that matter, and answers that work
+              in practice. I’ve worked across the stack ever since, following
+              my curiosity and wherever the work is most interesting.
+            </p>
+            <p>
+              AI has made that work more exciting. It takes more of the
+              repetitive work out of the way and gives me better tools to
+              explore platform, SRE, and operations work.
+            </p>
+            <p>
+              Outside of work, I follow my curiosity into other technology
+              projects, and let New York do the rest: music, food, theater,
+              long walks, and time with my dog. If there are no interesting
+              problems around, I tend to find them.
+            </p>
+          </div>
+        </div>
+        <p
+          class="mt-8 flex items-center gap-3 font-mono text-sm"
+          style="color: var(--color-fg);"
+        >
+          <span>Current employer</span>
+          <a
+            href="https://ai.one/"
+            aria-label="Visit ai.one"
+            title="Visit ai.one"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="about-employer-link rounded-sm p-1 focus-visible:outline-2 focus-visible:outline-offset-2"
+            style="outline-color: var(--color-fg);"
+          >
+            <span
+              class="about-employer-logo"
+              aria-hidden="true"
+              set:html={aiOneLogo}
+            />
+          </a>
+        </p>
+      </article>
+    </main>
+    <Footer />
+  </body>
 </html>
+
+<style>
+  .about-portrait {
+    border: 1px solid var(--color-fg);
+  }
+
+  .about-employer-link {
+    transition: opacity 150ms ease;
+  }
+
+  .about-employer-link:hover,
+  .about-employer-link:focus-visible {
+    opacity: 0.75;
+  }
+
+  .about-employer-logo :global(svg) {
+    display: block;
+    width: auto;
+    height: 1.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-employer-link {
+      transition: none;
+    }
+  }
+</style>

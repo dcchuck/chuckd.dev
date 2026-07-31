@@ -10,24 +10,25 @@ async function readBuiltAboutPage() {
 
 test('about page renders the approved biography, portrait, and employer link', async () => {
   const html = await readBuiltAboutPage();
+  const text = html.replace(/\s+/g, ' ');
 
   assert.match(html, /<title>About - Chuck Danielsson<\/title>/);
   assert.match(html, />\s*About\s*</);
   assert.match(
-    html,
+    text,
     /I’m Chuck Danielsson\. I work on software and the systems that support it:/,
   );
-  assert.match(html, /Mathematics came before technology for me\./);
+  assert.match(text, /Mathematics came before technology for me\./);
   assert.match(
-    html,
+    text,
     /questions that matter, and answers that work in practice\./,
   );
-  assert.match(html, /AI has made that work more exciting\./);
+  assert.match(text, /AI has made that work more exciting\./);
   assert.match(
-    html,
+    text,
     /music, food, theater, long walks, and time with my dog\./,
   );
-  assert.doesNotMatch(html, /Head of Platform Engineering/);
+  assert.doesNotMatch(text, /Head of Platform Engineering/);
 
   assert.match(
     html,
