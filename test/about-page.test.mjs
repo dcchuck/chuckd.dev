@@ -36,6 +36,7 @@ test('about page renders the approved biography and portrait without an employer
     /<img(?=[^>]*alt="Illustrated portrait of Chuck Danielsson")(?=[^>]*src="\/_astro\/[^\"]+")[^>]*>/,
   );
   assert.match(html, /class="[^"]*sm:float-left[^"]*"/);
+  assert.match(html, /class="[^"]*sm:mt-1[^"]*"/);
   assert.match(html, /class="[^"]*sm:mr-6[^"]*"/);
   assert.match(html, /class="[^"]*sm:mb-4[^"]*"/);
   assert.match(html, /class="clear-both"/);
