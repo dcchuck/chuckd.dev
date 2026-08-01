@@ -23,20 +23,16 @@ test('about page renders the approved biography, portrait, and employer link', a
   assert.match(html, />\s*About\s*</);
   assert.deepEqual(paragraphs.slice(0, 4), [
     'I’m Chuck Danielsson. I work on software and the systems that support it: how applications are built, delivered, observed, and kept running. Most of my career has been in application development, with a focus on delivery and user experience. To me, user experience goes beyond the screen. It includes speed, reliability, and everything behind the product.',
-    'Mathematics came before technology for me. I was drawn to both by the same thing: questions that matter, and answers that work in practice. I’ve worked across the stack ever since, following my curiosity and wherever the work is most interesting.',
+    'Mathematics came before technology. I was drawn to both by the same thing: questions that matter, and answers that work in practice. That interest has taken me across the stack, following my curiosity and wherever the work is most interesting.',
     'AI has made that work more exciting. It takes more of the repetitive work out of the way and gives me better tools to explore platform, SRE, and operations work.',
     'Outside of work, I follow my curiosity into other technology projects, and let New York do the rest: music, food, theater, long walks, and time with my dog. If there are no interesting problems around, I tend to find them.',
   ]);
   assert.doesNotMatch(text, /Head of Platform Engineering/);
+  assert.doesNotMatch(html, /Current employer/);
+  assert.doesNotMatch(html, /https:\/\/ai\.one\//);
 
   assert.match(
     html,
     /<img(?=[^>]*alt="Illustrated portrait of Chuck Danielsson")(?=[^>]*src="\/_astro\/[^\"]+")[^>]*>/,
   );
-
-  const employerLink = html.match(
-    /<a(?=[^>]*href="https:\/\/ai\.one\/")(?=[^>]*aria-label="Visit ai\.one")(?=[^>]*target="_blank")(?=[^>]*rel="noopener noreferrer")[^>]*>([\s\S]*?)<\/a>/,
-  );
-  assert.ok(employerLink, 'missing accessible ai.one employer link');
-  assert.match(employerLink[1], /<svg\b/);
 });
