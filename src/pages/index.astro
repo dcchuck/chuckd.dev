@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css'
 import FontPreload from '../components/FontPreload.astro'
+import FooterLinks from '../components/FooterLinks.astro'
 import ThemeScript from '../components/ThemeScript.astro'
 ---
 
@@ -19,14 +20,8 @@ import ThemeScript from '../components/ThemeScript.astro'
 			<h1 class="text-5xl font-title text-center leading-tight" style="color: var(--color-fg);">
 				<span class="text-[1.25em]">C</span>huck<br /><span class="text-[1.25em]">D</span>anielsson
 			</h1>
-			<div class="mt-4 font-title" style="color: var(--color-fg);">
-				<a href="/blog" class="hover:underline">blog</a>
-				<span class="mx-2">*</span>
-				<a href="/projects" class="hover:underline">projects</a>
-				<span class="mx-2">*</span>
-				<a href="/about" class="hover:underline">about</a>
-				<span class="mx-2">*</span>
-				<a href="https://github.com/dcchuck" target="_blank" rel="noopener noreferrer" class="hover:underline">github</a>
+			<div class="mt-4">
+				<FooterLinks />
 			</div>
 		</div>
 	</body>

@@ -1,0 +1,85 @@
+---
+import githubSvg from '../assets/brand-icons/github.svg?raw';
+import xSvg from '../assets/brand-icons/x.svg?raw';
+
+const externalLinks = [
+  {
+    href: 'https://github.com/dcchuck',
+    label: 'GitHub',
+    icon: githubSvg,
+  },
+  {
+    href: 'https://x.com/dcChuck',
+    label: 'X',
+    icon: xSvg,
+  },
+];
+---
+
+<nav aria-label="Pages" class="font-title text-center" style="color: var(--color-fg);">
+  <a href="/blog" class="hover:underline">blog</a>
+  <span class="mx-2">*</span>
+  <a href="/projects" class="hover:underline">projects</a>
+  <span class="mx-2">*</span>
+  <a href="/about" class="hover:underline">about</a>
+</nav>
+<nav aria-label="External links" class="mt-3 flex justify-center gap-3">
+  {
+    externalLinks.map((link) => (
+      <a
+        href={link.href}
+        data-footer-link={link.label.toLowerCase()}
+        aria-label={link.label}
+        title={link.label}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-social-link rounded-sm p-1 focus-visible:outline-2 focus-visible:outline-offset-2"
+        style="color: var(--color-fg); outline-color: var(--color-fg);"
+      >
+        <span
+          data-footer-icon={link.label.toLowerCase()}
+          class="footer-social-icon"
+          aria-hidden="true"
+          set:html={link.icon}
+        />
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .footer-social-icon {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .footer-social-icon :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .footer-social-link {
+    transition:
+      filter 150ms ease,
+      transform 150ms ease;
+  }
+
+  .footer-social-link:hover,
+  .footer-social-link:focus-visible {
+    filter: brightness(1.1);
+    transform: scale(1.08);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-social-link {
+      transition: none;
+    }
+
+    .footer-social-link:hover,
+    .footer-social-link:focus-visible {
+      transform: none;
+    }
+  }
+</style>

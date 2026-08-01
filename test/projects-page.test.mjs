@@ -145,6 +145,18 @@ test('homepage and shared footer link to projects', async () => {
   assert.match(projectsHtml, projectsLink);
 });
 
+test('homepage navigation uses the shared footer’s two-row link structure', async () => {
+  const html = await readBuiltPage('index.html');
+
+  assert.match(
+    html,
+    /<nav[^>]*aria-label="Pages"[^>]*>[\s\S]*href="\/blog"[\s\S]*href="\/projects"[\s\S]*href="\/about"[\s\S]*<\/nav>/,
+  );
+  assert.match(html, /<nav[^>]*aria-label="External links"/);
+  assertFooterIconLink(html, 'https://github.com/dcchuck', 'GitHub');
+  assertFooterIconLink(html, 'https://x.com/dcChuck', 'X');
+});
+
 test('shared footer separates page navigation from icon-only external links', async () => {
   const html = await readBuiltPage('about/index.html');
 
