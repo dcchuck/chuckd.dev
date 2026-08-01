@@ -28,12 +28,12 @@ import '../styles/global.css';
         <h1 class="text-2xl font-title" style="color: var(--color-fg);">
           About
         </h1>
-        <div class="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start">
+        <div class="mt-6">
           <Image
             src={portrait}
             alt="Illustrated portrait of Chuck Danielsson"
             width={240}
-            class="about-portrait w-full max-w-60 shrink-0"
+            class="about-portrait w-full max-w-60 sm:float-left sm:mr-6 sm:mb-4"
           />
           <div
             class="space-y-5 font-mono leading-relaxed"
@@ -65,6 +65,7 @@ import '../styles/global.css';
               problems around, I tend to find them.
             </p>
           </div>
+          <div class="clear-both" aria-hidden="true"></div>
         </div>
       </article>
     </main>
