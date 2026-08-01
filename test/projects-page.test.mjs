@@ -28,6 +28,23 @@ function assertAccessibleIconLink(html, href, label) {
   assert.equal(match[1].replace(/<[^>]+>/g, '').trim(), '');
 }
 
+function assertFooterIconLink(html, href, label) {
+  const anchor = new RegExp(
+    '<a(?=[^>]*data-footer-link)(?=[^>]*href="' + escapeRegex(href) + '")' +
+      '(?=[^>]*aria-label="' + escapeRegex(label) + '")' +
+      '(?=[^>]*title="' + escapeRegex(label) + '")' +
+      '(?=[^>]*target="_blank")' +
+      '(?=[^>]*rel="noopener noreferrer")[^>]*>' +
+      '([\\s\\S]*?)<\\/a>',
+  );
+  const match = html.match(anchor);
+
+  assert.ok(match, 'missing footer icon link: ' + label);
+  assert.match(match[1], /<svg\b[^>]*>/);
+  assert.match(match[1], /fill="currentColor"/);
+  assert.equal(match[1].replace(/<[^>]+>/g, '').trim(), '');
+}
+
 function projectIconFragments(html, brand) {
   const pattern = new RegExp(
     `<span[^>]*data-brand-icon="${brand}"[^>]*>([\\s\\S]*?)<\\/span>`,
@@ -126,4 +143,16 @@ test('homepage and shared footer link to projects', async () => {
 
   assert.match(homeHtml, projectsLink);
   assert.match(projectsHtml, projectsLink);
+});
+
+test('shared footer separates page navigation from icon-only external links', async () => {
+  const html = await readBuiltPage('about/index.html');
+
+  assert.match(
+    html,
+    /<nav[^>]*aria-label="Pages"[^>]*>[\s\S]*href="\/blog"[\s\S]*href="\/projects"[\s\S]*href="\/about"[\s\S]*<\/nav>/,
+  );
+  assert.match(html, /<nav[^>]*aria-label="External links"/);
+  assertFooterIconLink(html, 'https://github.com/dcchuck', 'GitHub');
+  assertFooterIconLink(html, 'https://x.com/dcChuck', 'X');
 });
