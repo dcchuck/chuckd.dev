@@ -13,7 +13,7 @@ Use an `About` page heading and these four prose paragraphs, in order:
 
 > I’m Chuck Danielsson. I work on software and the systems that support it: how applications are built, delivered, observed, and kept running. Most of my career has been in application development, with a focus on delivery and user experience. To me, user experience goes beyond the screen. It includes speed, reliability, and everything behind the product.
 >
-> Mathematics came before technology for me. I was drawn to both by the same thing: questions that matter, and answers that work in practice. I’ve worked across the stack ever since, following my curiosity and wherever the work is most interesting.
+> Mathematics came before technology. I was drawn to both by the same thing: questions that matter, and answers that work in practice. That interest has taken me across the stack, following my curiosity and wherever the work is most interesting.
 >
 > AI has made that work more exciting. It takes more of the repetitive work out of the way and gives me better tools to explore platform, SRE, and operations work.
 >
@@ -31,7 +31,7 @@ Do not mention the `Head of Platform Engineering` title in the narrative. Correc
   - Mobile: stack it between the heading and prose.
   - Preserve its square composition rather than circularly cropping it; use a restrained border that matches the site.
   - Serve it as a local, Astro-optimized image with alt text: `Illustrated portrait of Chuck Danielsson`.
-- After the prose, add a quiet employer line: `Current employer` plus the official ai.one wordmark/logo. It links to `https://ai.one/` in a new tab with the appropriate safe external-link attributes and an accessible label. Package the official logo with the site rather than loading it remotely.
+- The page ends after the final personal paragraph; it has no employer badge, logo, or external employer link.
 
 ## Implementation boundaries
 
@@ -42,8 +42,8 @@ Do not mention the `Head of Platform Engineering` title in the narrative. Correc
 
 ## Verification
 
-- Extend the existing static-page test suite to assert the title, heading, approved prose, portrait image and alt text, and current-employer link.
-- Verify the external employer link has a correct URL, an accessible label, and safe new-tab attributes.
+- Extend the existing static-page test suite to assert the title, heading, approved prose, and portrait image and alt text.
+- Verify the generated page contains no employer line or ai.one link.
 - Run the production build and all node tests.
 - Inspect the page locally at desktop and mobile widths in both themes before requesting release approval.
 

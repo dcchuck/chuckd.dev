@@ -14,7 +14,7 @@ function renderedParagraphs(html) {
   );
 }
 
-test('about page renders the approved biography, portrait, and employer link', async () => {
+test('about page renders the approved biography and portrait without an employer endcap', async () => {
   const html = await readBuiltAboutPage();
   const text = html.replace(/\s+/g, ' ');
   const paragraphs = renderedParagraphs(html);

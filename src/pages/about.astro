@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import portrait from '../assets/about/rotoscoped.png';
-import aiOneLogo from '../assets/brand-icons/ai-one.svg?raw';
 import Footer from '../components/Footer.astro';
 import FontPreload from '../components/FontPreload.astro';
 import Header from '../components/Header.astro';
@@ -49,9 +48,9 @@ import '../styles/global.css';
               reliability, and everything behind the product.
             </p>
             <p>
-              Mathematics came before technology for me. I was drawn to both
-              by the same thing: questions that matter, and answers that work
-              in practice. I’ve worked across the stack ever since, following
+              Mathematics came before technology. I was drawn to both by the
+              same thing: questions that matter, and answers that work in
+              practice. That interest has taken me across the stack, following
               my curiosity and wherever the work is most interesting.
             </p>
             <p>
@@ -67,27 +66,6 @@ import '../styles/global.css';
             </p>
           </div>
         </div>
-        <p
-          class="mt-8 flex items-center gap-3 font-mono text-sm"
-          style="color: var(--color-fg);"
-        >
-          <span>Current employer</span>
-          <a
-            href="https://ai.one/"
-            aria-label="Visit ai.one"
-            title="Visit ai.one"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="about-employer-link rounded-sm p-1 focus-visible:outline-2 focus-visible:outline-offset-2"
-            style="outline-color: var(--color-fg);"
-          >
-            <span
-              class="about-employer-logo"
-              aria-hidden="true"
-              set:html={aiOneLogo}
-            />
-          </a>
-        </p>
       </article>
     </main>
     <Footer />
@@ -97,26 +75,5 @@ import '../styles/global.css';
 <style>
   .about-portrait {
     border: 1px solid var(--color-fg);
-  }
-
-  .about-employer-link {
-    transition: opacity 150ms ease;
-  }
-
-  .about-employer-link:hover,
-  .about-employer-link:focus-visible {
-    opacity: 0.75;
-  }
-
-  .about-employer-logo :global(svg) {
-    display: block;
-    width: auto;
-    height: 1.5rem;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .about-employer-link {
-      transition: none;
-    }
   }
 </style>
