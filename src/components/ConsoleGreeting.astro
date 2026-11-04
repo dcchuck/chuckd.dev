@@ -1,0 +1,42 @@
+---
+---
+
+<script>
+  const sky = [
+    "      .        *          .         +          .        *",
+    "  *        .        +         *          .         .         +",
+    "       +        .       *         .    *      +        .",
+    "    .      *       .        +      .        .      *       .",
+    "         .     +      *   .    *   .  +    .     *     .",
+    "               .    *    .  +  .  *  .   *    .",
+    "                      .   *  . | .  *   .",
+    "                         *  -- * --  *",
+    "                              /|\\",
+    "                             / | \\",
+  ].join("\n");
+
+  const wizard = [
+    "                 /\\         /",
+    "                /  \\       /",
+    "               /  * \\     /",
+    "              /______\\   /",
+    "             (  o  o  )_/",
+    "              \\   ^   /",
+    "              /\\_____/\\",
+    "             /  ~~~~~  \\",
+    "            /___________\\",
+  ].join("\n");
+
+  const message = "Let your curiosity be your superpower.";
+  const signoff = "— chuckd.dev";
+
+  const mono = "font-family: ui-monospace, Menlo, Monaco, monospace; line-height: 1.2;";
+
+  console.log(
+    `%c${sky}\n%c${wizard}\n\n%c${message}\n%c${signoff}`,
+    `${mono} color: #e0b400;`,
+    `${mono} color: #8a5cf6;`,
+    `${mono} font-size: 14px; font-weight: bold; color: #8a5cf6;`,
+    `${mono} color: #888888;`,
+  );
+</script>
