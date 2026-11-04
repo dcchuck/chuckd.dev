@@ -1,10 +1,12 @@
 ---
+import Skins from '../../components/Skins.astro';
 import { getCollection } from 'astro:content';
 import '../../styles/global.css';
 import FontPreload from '../../components/FontPreload.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import ThemeScript from '../../components/ThemeScript.astro';
+import ConsoleGreeting from '../../components/ConsoleGreeting.astro';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -19,6 +21,7 @@ const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.get
 		<title>Blog - Chuck Danielson</title>
 		<FontPreload />
 		<ThemeScript />
+		<ConsoleGreeting />
 	</head>
 	<body class="min-h-dvh flex flex-col" style="background-color: var(--color-bg);">
 		<Header breadcrumbs={[{ label: "blog" }]} />
@@ -36,5 +39,6 @@ const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.get
 			</ul>
 		</main>
 		<Footer />
-	</body>
+	<Skins />
+</body>
 </html>

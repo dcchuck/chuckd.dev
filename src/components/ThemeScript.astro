@@ -1,34 +1,32 @@
 ---
+import { themes } from '../themes';
 ---
-
-<script is:inline>
-(function() {
-  function getTheme() {
-    // Check localStorage for saved preference
-    const saved = localStorage.getItem('theme');
-    if (saved === 'light' || saved === 'dark') {
-      return saved;
+<script is:inline define:vars={{ themes }}>
+(() => {
+  const valid = id => themes.some(theme => theme.id === id);
+  window.setTheme = id => {
+    if (!valid(id)) return false;
+    document.documentElement.dataset.theme = id;
+    const url = new URL(location.href);
+    if (url.searchParams.has('theme') && url.searchParams.get('theme') !== id) {
+      url.searchParams.set('theme', id);
+      history.replaceState(null, '', url);
     }
-    // Check browser preference
-    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-      return 'light';
-    }
-    // Default to dark
-    return 'dark';
-  }
-
-  function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }
-
-  // Set initial theme immediately to prevent flash
-  setTheme(getTheme());
-
-  // Expose toggle function globally
-  window.toggleTheme = function() {
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-    setTheme(current === 'dark' ? 'light' : 'dark');
+    try { localStorage.setItem('theme', id); } catch {}
+    document.querySelectorAll('[data-theme-picker]').forEach(picker => picker.value = id);
+    window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: id } }));
+    return true;
   };
+  window.setColorMode = mode => {
+    if (mode !== 'light' && mode !== 'dark') return;
+    document.documentElement.dataset.mode = mode;
+    try { localStorage.setItem('color-mode', mode); } catch {}
+    window.dispatchEvent(new CustomEvent('modechange', { detail: { mode } }));
+  };
+  let saved, mode;
+  try { saved = localStorage.getItem('theme'); mode = localStorage.getItem('color-mode'); } catch {}
+  window.setColorMode(mode === 'light' || mode === 'dark' ? mode : saved === 'light' ? 'light' : 'dark');
+  const requested = new URLSearchParams(location.search).get('theme');
+  window.setTheme(valid(requested) ? requested : valid(saved) ? saved : saved === 'light' || saved === 'dark' ? 'goonies' : 'default');
 })();
 </script>

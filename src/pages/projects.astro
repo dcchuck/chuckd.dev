@@ -1,10 +1,12 @@
 ---
+import Skins from '../components/Skins.astro';
 import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import FontPreload from '../components/FontPreload.astro';
 import Header from '../components/Header.astro';
 import ProjectRow from '../components/ProjectRow.astro';
 import ThemeScript from '../components/ThemeScript.astro';
+import ConsoleGreeting from '../components/ConsoleGreeting.astro';
 import { projects } from '../data/projects';
 ---
 
@@ -17,6 +19,7 @@ import { projects } from '../data/projects';
     <title>Projects - Chuck Danielson</title>
     <FontPreload />
     <ThemeScript />
+    <ConsoleGreeting />
   </head>
   <body
     class="min-h-dvh flex flex-col"
@@ -35,5 +38,6 @@ import { projects } from '../data/projects';
       </ul>
     </main>
     <Footer />
-  </body>
+  <Skins />
+</body>
 </html>

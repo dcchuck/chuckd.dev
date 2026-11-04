@@ -10,7 +10,7 @@
 }
 
 @theme {
-  --font-title: Goonies;
+  --font-title: Menlo, Monaco, "Courier New", monospace;
   --font-mono: "SF Mono", ui-monospace, SFMono-Regular, "Roboto Mono", Menlo, Monaco, Consolas, monospace;
 }
 
@@ -20,7 +20,7 @@
   --color-fg: #ffffff;
 }
 
-html[data-theme="light"] {
+html[data-mode="light"] {
   --color-bg: #ffffff;
   --color-fg: #000000;
 }
@@ -38,7 +38,7 @@ html[data-theme="light"] {
 }
 
 /* Override prose colors for light mode */
-html[data-theme="light"] .prose {
+html[data-mode="light"] .prose {
   --tw-prose-body: #000000;
   --tw-prose-headings: #000000;
   --tw-prose-links: #000000;
@@ -48,3 +48,10 @@ html[data-theme="light"] .prose {
   --tw-prose-pre-bg: #f3f4f6;
   --tw-prose-pre-code: #000000;
 }
+
+html[data-theme="goonies"] { --font-title: Goonies; }
+html:not([data-theme="goonies"]) .font-title { font-family: Menlo, Monaco, "Courier New", monospace; }
+.goonies-symbol { display:none; }
+html[data-theme="goonies"] .goonies-symbol { display:inline; }
+html[data-theme="goonies"] .plain-symbol { display:none; }
+html:not([data-theme="goonies"]) .home-title > span { font-size:inherit; }

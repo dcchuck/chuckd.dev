@@ -11,7 +11,7 @@ const { breadcrumbs } = Astro.props;
 <header class="p-8 pb-4 max-w-[96rem] mx-auto w-full">
   <nav class="font-title flex justify-between items-center" style="color: var(--color-fg);">
     <div>
-      <a href="/" class="hover:underline" aria-label="Home">*</a>
+      <a href="/" class="hover:underline" aria-label="Home"><span class="goonies-symbol">*</span><span class="plain-symbol">home</span></a>
       {breadcrumbs.map((crumb, index) => (
         <>
           <span class="mx-2">/</span>

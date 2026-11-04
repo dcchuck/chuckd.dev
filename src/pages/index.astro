@@ -1,8 +1,11 @@
 ---
+import Menu from '../components/Menu.astro';
+import Skins from '../components/Skins.astro';
 import '../styles/global.css'
 import FontPreload from '../components/FontPreload.astro'
 import FooterLinks from '../components/FooterLinks.astro'
 import ThemeScript from '../components/ThemeScript.astro'
+import ConsoleGreeting from '../components/ConsoleGreeting.astro'
 ---
 
 <html lang="en">
@@ -14,15 +17,18 @@ import ThemeScript from '../components/ThemeScript.astro'
 		<title>Chuck Danielson</title>
 		<FontPreload />
 		<ThemeScript />
+		<ConsoleGreeting />
 	</head>
 	<body>
+    <div class="home-menu"><Menu /></div>
 		<div class="h-dvh flex flex-col items-center justify-center" style="background-color: var(--color-bg);">
-			<h1 class="text-5xl font-title text-center leading-tight" style="color: var(--color-fg);">
+			<h1 class="home-title text-5xl font-title text-center leading-tight" style="color: var(--color-fg);">
 				<span class="text-[1.25em]">C</span>huck<br /><span class="text-[1.25em]">D</span>anielsson
 			</h1>
 			<div class="mt-4">
 				<FooterLinks />
 			</div>
 		</div>
-	</body>
+	<Skins />
+</body>
 </html>

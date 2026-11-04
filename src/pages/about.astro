@@ -1,10 +1,13 @@
 ---
+import Skins from '../components/Skins.astro';
+import Biography from '../components/Biography.astro';
 import { Image } from 'astro:assets';
 import portrait from '../assets/about/rotoscoped.png';
 import Footer from '../components/Footer.astro';
 import FontPreload from '../components/FontPreload.astro';
 import Header from '../components/Header.astro';
 import ThemeScript from '../components/ThemeScript.astro';
+import ConsoleGreeting from '../components/ConsoleGreeting.astro';
 import '../styles/global.css';
 ---
 
@@ -17,6 +20,7 @@ import '../styles/global.css';
     <title>About - Chuck Danielsson</title>
     <FontPreload />
     <ThemeScript />
+    <ConsoleGreeting />
   </head>
   <body
     class="min-h-dvh flex flex-col"
@@ -39,37 +43,15 @@ import '../styles/global.css';
             class="space-y-5 font-mono leading-relaxed"
             style="color: var(--color-fg);"
           >
-            <p>
-              I’m Chuck Danielsson. I build software and the systems that keep
-              it running. Most of my career has been in application
-              development, with a focus on delivery and user experience. To
-              me, user experience goes beyond the screen. It includes speed,
-              reliability, and everything behind the product.
-            </p>
-            <p>
-              Mathematics came before technology. I was drawn to both by the
-              same thing: questions that matter, and answers that work in
-              practice. That interest has taken me across the stack, following
-              my curiosity and wherever the work is most interesting.
-            </p>
-            <p>
-              AI has made that work more exciting. It takes more of the
-              repetitive work out of the way and gives me better tools to
-              explore platform, SRE, and operations work.
-            </p>
-            <p>
-              Outside of work, I follow my curiosity into other technology
-              projects, and let New York do the rest: music, food, long
-              walks, and time with my dog. If there are no interesting
-              problems around, I tend to find them.
-            </p>
+            <Biography />
           </div>
           <div class="clear-both" aria-hidden="true"></div>
         </div>
       </article>
     </main>
     <Footer />
-  </body>
+  <Skins />
+</body>
 </html>
 
 <style>
