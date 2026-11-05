@@ -1,0 +1,9 @@
+---
+import names from './sprite-names.json';
+
+/** A sprite-sheet icon. `name` is either an exact sprite ('t-save') or a base name plus `size`. */
+const { name = 'document', size = 32 } = Astro.props;
+const sprite = names.includes(name) ? name : `${name}-${size}`;
+if (!names.includes(sprite)) throw new Error(`Unknown Windows icon: ${sprite}`);
+---
+<span class={`win-icon i-${sprite}`} aria-hidden="true"></span>

@@ -1,3 +1,7 @@
+import { initWordPad } from './windows-wordpad';
+import { initExplorer } from './windows-explorer';
+import { initWindows } from './windows';
+import { initWindowsApps } from './windows-apps';
 import { SiteShell } from './shell';
 import { terminalKeys } from './terminal-keys';
 import { themes, type Theme } from '../themes';
@@ -42,8 +46,9 @@ function showDocument(name: string) {
   content.replaceChildren(fragment(name));
   const title = `${name === 'about' ? 'About Me.doc' : name === 'blog' ? 'Blog' : 'Projects'} - WordPad`;
   $('#document-title').textContent = title;
-  $('#document-task').textContent = title;
   doc.hidden = false;
+  content.focus({preventScroll:true});
+  document.dispatchEvent(new CustomEvent('windowopen', {detail: 'document-window'}));
 }
 function showHelp() {
   const commands = ['man chuckd', 'pwd', 'ls -la', 'cd projects', 'cd ~', 'cat about.txt', 'about', 'projects', 'blog', 'history', 'echo $PWD', 'github --contributions', 'theme', 'whoami', 'clear'];
@@ -75,16 +80,24 @@ function syncTheme() {
   document.querySelectorAll<HTMLButtonElement>('[data-set-theme]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.setTheme === theme)));
   updatePrompt();
   if (!initialized && (theme === 'terminal' || theme === 'windows-classic')) {
-    line('Type help to see commands, or man chuckd to read the manual.');
-    if (post && original) output.append(original.cloneNode(true));
-    else output.append(fragment(location.pathname === '/' ? 'manual' : currentDocument));
+    if (theme === 'windows-classic') {
+      line('Chuck Windows [Version 6.1.7601]');
+      line(`Copyright (c) ${new Date().getFullYear()} Chuck Danielsson. No rights reserved.`);
+      line('');
+      line('Type help to see commands, or man chuckd to read the manual.');
+      line('');
+    } else {
+      line('Type help to see commands, or man chuckd to read the manual.');
+      if (post && original) output.append(original.cloneNode(true));
+      else output.append(fragment(location.pathname === '/' ? 'manual' : currentDocument));
+    }
     initialized = true;
   }
   terminal.hidden = theme !== 'terminal';
   if (theme === 'terminal') input.focus({ preventScroll: true });
 }
 showDocument(currentDocument);
-if (post && original) { content.replaceChildren(original.cloneNode(true)); $('#document-title').textContent = document.title + ' - WordPad'; $('#document-task').textContent = document.title; }
+if (post && original) { content.replaceChildren(original.cloneNode(true)); $('#document-title').textContent = document.title + ' - WordPad'; }
 syncTheme();
 if (document.documentElement.dataset.theme === 'terminal') input.focus({ preventScroll: true });
 viewport.addEventListener('click', event => {
@@ -134,6 +147,7 @@ function closeStart() { startMenu.hidden=true; $('#start-button').setAttribute('
 document.addEventListener('click', event => {
   const target=(event.target as HTMLElement).closest<HTMLElement>('button');
   if(!target) return;
+  if(target.closest('.desktop') && event.detail>0 && matchMedia('(pointer:fine)').matches) return;
   if(target.dataset.setTheme) { window.setTheme(target.dataset.setTheme); target.closest('details')?.removeAttribute('open'); }
   if(target.hasAttribute('data-toggle-mode')) window.setColorMode(document.documentElement.dataset.mode === 'light' ? 'dark' : 'light');
   if(target.hasAttribute('data-display-properties')) {
@@ -149,17 +163,29 @@ document.addEventListener('click', event => {
   if(target.dataset.command) run(target.dataset.command);
   if(target.dataset.open) {
     closeStart();
-    if(target.dataset.open==='cmd') { terminal.hidden=false; input.focus(); } else showDocument(target.dataset.open);
+    if(['projects','blog','documents','computer','recycle'].includes(target.dataset.open)&&document.documentElement.dataset.theme==='windows-classic') { document.dispatchEvent(new CustomEvent('explore',{detail:target.dataset.open})); }
+    else if(target.dataset.open==='cmd') { terminal.hidden=false; document.dispatchEvent(new CustomEvent('windowopen', {detail:'terminal-window'})); input.focus(); } else showDocument(target.dataset.open);
   }
-  if(target.hasAttribute('data-close-cmd')) terminal.hidden=true;
-  if(target.dataset.window==='close' || target.dataset.window==='minimize') doc.hidden=true;
-  if(target.dataset.window==='maximize') doc.classList.toggle('maximized');
-  if(target.id==='document-task') { doc.hidden=!doc.hidden; }
   if(target.id==='start-button') { startMenu.hidden=!startMenu.hidden; target.setAttribute('aria-expanded', String(!startMenu.hidden)); }
   if(target.hasAttribute('data-print')) window.print();
-  if(target.hasAttribute('data-help')) { terminal.hidden=false; showHelp(); input.focus(); }
+  if(target.hasAttribute('data-shutdown')) { closeStart(); window.setTheme('default'); }
+  if(target.hasAttribute('data-help')) { terminal.hidden=false; document.dispatchEvent(new CustomEvent('windowopen', {detail:'terminal-window'})); showHelp(); input.focus(); }
 });
 document.addEventListener('keydown', event => { if(event.key==='Escape') { closeStart(); document.querySelectorAll('details.site-menu[open]').forEach(menu => menu.removeAttribute('open')); } });
 document.addEventListener('click', event => { if(!(event.target as HTMLElement).closest('.start-menu, #start-button')) closeStart(); if(!(event.target as HTMLElement).closest('.site-menu')) document.querySelectorAll('details.site-menu[open]').forEach(menu => menu.removeAttribute('open'));  });
 function clock() { $('#desktop-clock').textContent=new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}); }
 clock(); setInterval(clock,60000);
+
+initWindows();
+initWindowsApps();
+
+document.querySelector('.desktop')!.addEventListener('dblclick', event => { const button=(event.target as HTMLElement).closest<HTMLButtonElement>('button[data-open]'); if(button)button.click(); });
+
+initExplorer();
+document.addEventListener('desktopdocument',event=>{
+  const name=(event as CustomEvent<string>).detail;
+  if(name==='about'){showDocument('about');return;}
+  const template=[...document.querySelectorAll<HTMLTemplateElement>('[data-shell-file]')].find(t=>t.dataset.path===`/home/chuck/projects/${name}.txt`);
+  if(template){content.replaceChildren(template.content.cloneNode(true));content.focus({preventScroll:true});$('#document-title').textContent=name+'.txt - WordPad';document.dispatchEvent(new CustomEvent('windowopen',{detail:'document-window'}));}
+});
+initWordPad();

@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+const colors=['#000000','#808080','#800000','#808000','#008000','#008080','#000080','#800080','#808040','#004040','#0080ff','#004080','#8000ff','#804000','#ffffff','#c0c0c0','#ff0000','#ffff00','#00ff00','#00ffff','#0000ff','#ff00ff','#ffff80','#00ff80','#80ffff','#8080ff','#ff0080','#ff8040'];
+const tools=[['eraser','Eraser/Color Eraser'],['fill','Fill With Color'],['picker','Pick Color'],['zoom','Magnifier'],['pencil','Pencil'],['brush','Brush'],['spray','Airbrush'],['line','Line'],['rectangle','Rectangle'],['ellipse','Ellipse']];
+const sizes=[2,5,10,20];
+---
+<section id="paint-window" class="classic-window desktop-app" data-managed-window data-app-title="untitled - Paint" data-icon="paint" aria-label="Paint" hidden>
+  <div class="titlebar"><Icon name="paint" size={16}/><strong>untitled - Paint</strong><div class="window-controls"><button data-window="minimize" aria-label="Minimize Paint"></button><button data-window="maximize" aria-label="Maximize Paint"></button><button data-window="close" aria-label="Close Paint"></button></div></div>
+  <div class="app-menubar wordpad-menu"><button data-menu="paint-file"><u>F</u>ile</button><button data-menu="paint-edit"><u>E</u>dit</button><button data-menu="paint-view"><u>V</u>iew</button><button data-menu="paint-image"><u>I</u>mage</button><button data-menu="paint-colors"><u>C</u>olors</button><button data-menu="paint-help"><u>H</u>elp</button></div>
+  <div class="paint-workspace">
+    <div class="paint-tools" role="toolbar" aria-label="Drawing tools">
+      {tools.map(([tool,label])=><button data-tool={tool} aria-pressed={tool==='pencil'?'true':'false'} title={label} aria-label={label}><Icon name={`p-${tool}`}/></button>)}
+      <div class="paint-options" role="group" aria-label="Brush size">{sizes.map((size,index)=><button data-paint-size={size} aria-pressed={index===0?'true':'false'} aria-label={`${size} pixel brush`}><i style={`height:${Math.min(size,6)}px`}></i></button>)}</div>
+    </div>
+    <div class="paint-paper"><div class="paint-sheet"><canvas id="paint-canvas" tabindex="0" width="640" height="360" aria-label="Drawing canvas. Choose a tool and drag to draw."></canvas><i class="sheet-handle e"></i><i class="sheet-handle s"></i><i class="sheet-handle se"></i></div></div>
+  </div>
+  <div class="paint-palette">
+    <div class="paint-current" title="Foreground and background colors"><i id="paint-back"></i><label id="paint-front"><input id="paint-color" type="color" value="#000000" aria-label="Drawing color"/></label></div>
+    <div class="paint-colors">{colors.map(color=><button data-color={color} style={`background:${color}`} title={color} aria-label={`Use ${color}`}></button>)}</div>
+  </div>
+  <div class="statusbar"><span id="paint-status" role="status">For Help, click Help Topics on the Help Menu.</span><span class="status-small" id="paint-coords"></span><span class="status-small">640 × 360</span></div>
+</section>
+<section id="mines-window" class="classic-window desktop-app" data-managed-window data-fixed data-app-title="Minesweeper" data-icon="mine" aria-label="Minesweeper" hidden>
+  <div class="titlebar"><Icon name="mine" size={16}/><strong>Minesweeper</strong><div class="window-controls"><button data-window="minimize" aria-label="Minimize Minesweeper"></button><button data-window="maximize" aria-label="Maximize Minesweeper" disabled></button><button data-window="close" aria-label="Close Minesweeper"></button></div></div>
+  <div class="app-menubar wordpad-menu"><button data-menu="mines-game"><u>G</u>ame</button><button data-menu="mines-help"><u>H</u>elp</button></div>
+  <div class="mine-surround">
+    <div class="mine-score"><output id="mine-count" aria-label="Mines remaining"></output><button data-new-game id="mine-face" aria-label="Start new game"><i></i></button><output id="mine-time" aria-label="Elapsed seconds"></output></div>
+    <div id="mine-board" role="group" aria-label="Minesweeper board"></div>
+  </div>
+  <p id="mine-status" class="sr-status" role="status"></p>
+</section>
+
+<template id="paint-file"><button data-paint="new">New<span>Ctrl+N</span></button><button data-paint="save">Save As…<span>Ctrl+S</span></button><hr/><button data-window-close="paint-window">Exit<span>Alt+F4</span></button></template>
+<template id="paint-edit"><button data-paint="undo">Undo<span>Ctrl+Z</span></button><button data-paint="redo">Repeat<span>Ctrl+Y</span></button></template>
+<template id="paint-view"><button data-paint="zoom-reset">Normal Size</button><button data-paint="zoom-in">Large Size</button></template>
+<template id="paint-image"><button data-paint="clear">Clear Image<span>Ctrl+Shft+N</span></button></template>
+<template id="paint-colors"><button data-paint="edit-colors">Edit Colors…</button></template>
+<template id="paint-help"><button data-help>Help Topics</button></template>
+<template id="mines-game"><button data-new-game>New<span>F2</span></button><hr/><button data-mine-flag aria-checked="false">Flag Mode</button><hr/><button data-window-close="mines-window">Exit</button></template>
+<template id="mines-help"><button data-help>Help Topics</button></template>

@@ -1,47 +1,110 @@
 ---
 import { getCollection } from 'astro:content';
 import { projects } from '../data/projects';
+import Icon from './windows/Icon.astro';
+import Explorer from './windows/Explorer.astro';
+import WindowsApps from './windows/Apps.astro';
 import Biography from './Biography.astro';
 import { themes } from '../themes';
 import '../styles/skins.css';
+import '../styles/windows-sprite.css';
+import '../styles/windows.css';
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a,b) => b.data.date.getTime()-a.data.date.getTime());
 ---
 <div id="skin-experience">
   <div class="desktop" aria-label="Desktop">
-    <button data-open="about"><span class="desktop-icon document-icon">W</span>About Me.doc</button>
-    <button data-open="blog"><span class="desktop-icon folder-icon"></span>Blog</button>
-    <button data-open="projects"><span class="desktop-icon folder-icon"></span>Projects</button>
-    <button data-open="cmd"><span class="desktop-icon prompt-icon">&gt;_</span>Command Prompt</button>
-    <a href="https://github.com/dcchuck"><span class="desktop-icon globe-icon">◎</span>GitHub</a>
-    <a href="https://x.com/dcChuck"><span class="desktop-icon globe-icon">◎</span>X</a>
+    <button data-open="computer"><Icon name="computer"/><span>Computer</span></button>
+    <button data-open="recycle"><Icon name="recycle"/><span>Recycle Bin</span></button>
+    <button data-open="about"><Icon name="document"/><span>About Me.doc</span></button>
+    <button data-open="blog"><Icon name="folder"/><span>Blog</span></button>
+    <button data-open="projects"><Icon name="folder"/><span>Projects</span></button>
+    <button data-open="cmd" class="shortcut"><Icon name="cmd"/><span>Command Prompt</span></button>
+    <button data-launch="paint-window" class="shortcut"><Icon name="paint"/><span>Paint</span></button>
+    <button data-launch="mines-window" class="shortcut"><Icon name="mine"/><span>Minesweeper</span></button>
+    <a href="https://github.com/dcchuck" class="shortcut"><Icon name="globe"/><span>GitHub</span></a>
+    <a href="https://x.com/dcChuck" class="shortcut"><Icon name="globe"/><span>X</span></a>
   </div>
-  <section class="classic-window" id="document-window" aria-label="WordPad">
-    <div class="titlebar"><strong id="document-title">About Me.doc - WordPad</strong><div><button data-window="minimize" aria-label="Minimize">_</button><button data-window="maximize" aria-label="Maximize">□</button><button data-window="close" aria-label="Close">×</button></div></div>
-    <nav class="wordpad-menu" aria-label="WordPad navigation"><button data-open="about">File</button><button data-open="blog">Blog</button><button data-open="projects">Projects</button><button data-open="cmd">Command Prompt</button><button data-help>Help</button></nav>
-    <div class="wordpad-toolbar"><button data-open="about" title="Open biography">📄</button><button data-open="projects" title="Open projects">📁</button><button data-print title="Print document">▤</button><span class="toolbar-divider"></span><span class="font-box">Times New Roman</span><span class="font-box">12</span><span class="font-box">Western</span></div>
-    <div class="ruler" aria-hidden="true"></div>
-    <main id="document-content" tabindex="-1"></main>
-    <div class="statusbar"><span>For Help, choose Help</span><span>NUM</span></div>
+  <section class="classic-window" id="document-window" data-managed-window data-app-title="About Me.doc - WordPad" aria-label="WordPad">
+    <div class="titlebar"><Icon name="document" size={16}/><strong id="document-title">About Me.doc - WordPad</strong><div class="window-controls"><button data-window="minimize" aria-label="Minimize WordPad"></button><button data-window="maximize" aria-label="Maximize WordPad"></button><button data-window="close" aria-label="Close WordPad"></button></div></div>
+    <nav class="wordpad-menu" aria-label="WordPad menus"><button data-menu="wordpad-file"><u>F</u>ile</button><button data-menu="wordpad-edit"><u>E</u>dit</button><button data-menu="wordpad-view"><u>V</u>iew</button><button data-menu="wordpad-insert"><u>I</u>nsert</button><button data-menu="wordpad-format">F<u>o</u>rmat</button><button data-menu="wordpad-help"><u>H</u>elp</button></nav>
+    <div class="wordpad-toolbars">
+      <div class="wordpad-toolbar" role="toolbar" aria-label="Standard toolbar">
+        <button data-wordpad="new" aria-label="New document" title="New (Ctrl+N)"><Icon name="t-new"/></button><button data-menu="wordpad-file" aria-label="Open document" title="Open"><Icon name="t-open"/></button><button data-wordpad="save" aria-label="Save document" title="Save (Ctrl+S)"><Icon name="t-save"/></button><span class="toolbar-divider"></span><button data-print aria-label="Print document" title="Print"><Icon name="t-print"/></button><button data-print aria-label="Print preview" title="Print Preview"><Icon name="t-preview"/></button><span class="toolbar-divider"></span><button data-find aria-label="Find" title="Find (Ctrl+F)"><Icon name="t-find"/></button><span class="toolbar-divider"></span><button data-wordpad="cut" aria-label="Cut" title="Cut (Ctrl+X)"><Icon name="t-cut"/></button><button data-wordpad="copy" aria-label="Copy" title="Copy (Ctrl+C)"><Icon name="t-copy"/></button><button data-wordpad="paste" aria-label="Paste" title="Paste (Ctrl+V)"><Icon name="t-paste"/></button><button data-wordpad="undo" aria-label="Undo document edit" title="Undo (Ctrl+Z)"><Icon name="t-undo"/></button><span class="toolbar-divider"></span><button data-wordpad="date" aria-label="Insert date and time" title="Date/Time"><Icon name="t-date"/></button>
+      </div>
+      <div class="wordpad-format" role="toolbar" aria-label="Formatting toolbar"><select id="document-font" class="classic-select font-name" aria-label="Document font"><option value="Arial">Arial</option><option value="Times New Roman">Times New Roman</option><option value="Courier New">Courier New</option></select><select id="document-size" class="classic-select font-size" aria-label="Document font size"><option>10</option><option>12</option><option>14</option><option>18</option></select><select class="classic-select font-script" aria-label="Script"><option>Western</option></select><span class="toolbar-divider"></span><button data-wordpad="bold" aria-pressed="false" aria-label="Bold" title="Bold (Ctrl+B)"><Icon name="t-bold"/></button><button data-wordpad="italic" aria-pressed="false" aria-label="Italic" title="Italic (Ctrl+I)"><Icon name="t-italic"/></button><button data-wordpad="underline" aria-pressed="false" aria-label="Underline" title="Underline (Ctrl+U)"><Icon name="t-underline"/></button><label class="toolbar-color" title="Color"><Icon name="t-color"/><input id="document-color" type="color" value="#000000" aria-label="Text color"/></label><span class="toolbar-divider"></span><button data-wordpad="justifyLeft" aria-label="Align left" title="Align Left"><Icon name="t-left"/></button><button data-wordpad="justifyCenter" aria-label="Center text" title="Center"><Icon name="t-center"/></button><button data-wordpad="justifyRight" aria-label="Align right" title="Align Right"><Icon name="t-right"/></button><span class="toolbar-divider"></span><button data-wordpad="insertUnorderedList" aria-label="Bulleted list" title="Bullets"><Icon name="t-bullets"/></button></div>
+    </div>
+    <div class="ruler" aria-hidden="true"><div class="ruler-track"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><Icon name="r-indent-l"/><Icon name="r-indent-r"/></div></div>
+    <main id="document-content" tabindex="0" contenteditable="true" role="textbox" aria-label="Document text" aria-multiline="true" spellcheck="false"></main>
+    <div class="statusbar"><span>For Help, press F1</span><span class="status-small">NUM</span></div>
   </section>
-  <section id="terminal-window" aria-label="Terminal">
-    <div class="titlebar cmd-title"><strong>Command Prompt</strong><button data-close-cmd aria-label="Close Command Prompt">×</button></div>
+  <section id="terminal-window" data-managed-window data-app-title="C:\Windows\system32\cmd.exe" aria-label="Terminal">
+    <div class="titlebar cmd-title"><Icon name="cmd" size={16}/><strong>C:\Windows\system32\cmd.exe</strong><div class="window-controls"><button data-window="minimize" aria-label="Minimize Command Prompt"></button><button data-window="maximize" aria-label="Maximize Command Prompt"></button><button data-window="close" aria-label="Close Command Prompt"></button></div></div>
     <div class="terminal-body">
       <div id="terminal-output" role="log" aria-label="Command output" aria-live="polite"></div>
       <form id="command-form" autocomplete="off"><label for="command-input" id="command-prompt">chuck@chuckd ~ %</label><input id="command-input" aria-label="Command" spellcheck="false" autocapitalize="off" /></form>
     </div>
   </section>
-  <div class="start-menu" hidden><strong>chuckd.dev</strong><button data-open="about">About Me.doc</button><button data-open="blog">Blog</button><button data-open="projects">Projects</button><button data-open="cmd">Command Prompt</button><button data-display-properties>Settings → Display</button></div>
-  <dialog id="display-properties" class="classic-window display-properties" aria-labelledby="display-properties-title">
+  <WindowsApps />
+  <Explorer />
+  <div class="start-menu" hidden>
+    <div class="start-left">
+      <div class="start-programs">
+        <a href="https://github.com/dcchuck" data-start-program><Icon name="globe"/><span>GitHub</span></a>
+        <a href="https://x.com/dcChuck" data-start-program><Icon name="globe"/><span>X</span></a>
+        <hr/>
+        <button data-open="about" data-start-program><Icon name="document"/><span>WordPad</span></button>
+        <button data-open="cmd" data-start-program><Icon name="cmd"/><span>Command Prompt</span></button>
+        <button data-launch="paint-window" data-start-program><Icon name="paint"/><span>Paint</span></button>
+        <button data-launch="mines-window" data-start-program><Icon name="mine"/><span>Minesweeper</span></button>
+      </div>
+      <hr/>
+      <button class="all-programs" data-all-programs aria-expanded="false"><i class="win-icon i-t-arrow-r" aria-hidden="true"></i><span>All Programs</span></button>
+      <label class="start-find"><input id="start-search" aria-label="Search programs and files" placeholder="Search programs and files"/><Icon name="t-search"/></label>
+    </div>
+    <div class="start-right">
+      <div class="start-user"><span class="start-tile"><Icon name="tile"/></span></div>
+      <button data-open="about">Chuck</button>
+      <button data-open="documents">Documents</button>
+      <button data-open="projects">Projects</button>
+      <button data-open="blog">Blog</button>
+      <hr/>
+      <button data-open="computer">Computer</button>
+      <hr/>
+      <button data-display-properties>Control Panel</button>
+      <button data-help>Help and Support</button>
+      <div class="start-shutdown"><button data-shutdown title="Leave the Windows theme">Shut down</button><button data-shutdown aria-label="Shut down options" title="Leave the Windows theme"><Icon name="t-arrow-r"/></button></div>
+    </div>
+  </div>
+  <dialog id="display-properties" class="classic-window classic-dialog display-properties" aria-labelledby="display-properties-title">
     <form method="dialog">
-      <div class="titlebar"><strong id="display-properties-title">Display Properties</strong><button aria-label="Close Display Properties" value="cancel">×</button></div>
-      <fieldset><legend>Desktop theme</legend>
-        {themes.map(theme => <label><input type="radio" name="desktop-theme" value={theme.id} /> {theme.label}</label>)}
-      </fieldset>
-      <div class="dialog-actions"><button value="cancel">Cancel</button><button type="button" data-apply-theme>Apply</button></div>
+      <div class="titlebar"><strong id="display-properties-title">Display Properties</strong><div class="window-controls"><button data-window="close" aria-label="Close Display Properties" value="cancel"></button></div></div>
+      <div class="dialog-tabs"><span>Themes</span></div>
+      <div class="dialog-body">
+        <div class="dialog-monitor"><Icon name="monitor"/></div>
+        <fieldset><legend>Theme</legend>
+          {themes.map(theme => <label><input type="radio" name="desktop-theme" value={theme.id} /> {theme.label}</label>)}
+        </fieldset>
+      </div>
+      <div class="dialog-actions"><button type="button" data-apply-theme class="dialog-default">OK</button><button value="cancel">Cancel</button><button type="button" data-apply-theme>Apply</button></div>
     </form>
   </dialog>
-  <footer class="taskbar"><button id="start-button" aria-expanded="false">▦ Start</button><button id="document-task">About Me.doc - WordPad</button><button data-open="cmd">&gt;_</button><time id="desktop-clock"></time></footer>
+  <dialog id="find-dialog" class="classic-window classic-dialog find-dialog" aria-labelledby="find-dialog-title">
+    <form method="dialog">
+      <div class="titlebar"><strong id="find-dialog-title">Find</strong><div class="window-controls"><button data-window="close" aria-label="Close Find" value="cancel"></button></div></div>
+      <div class="find-body">
+        <label>Find what: <input id="find-text" autocomplete="off" spellcheck="false"/></label>
+        <div class="dialog-actions"><button type="button" id="find-next" class="dialog-default">Find Next</button><button value="cancel">Cancel</button></div>
+      </div>
+    </form>
+  </dialog>
+  <footer class="taskbar"><button id="start-button" aria-expanded="false"><Icon name="flag"/>Start</button><span class="taskbar-ridge" aria-hidden="true"></span><div id="window-tasks"><button id="document-task">About Me.doc - WordPad</button></div><div class="system-tray"><span title="Volume"><Icon name="speaker" size={16}/></span><span title="Network connected" aria-label="Network connected"><Icon name="network" size={16}/></span><time id="desktop-clock"></time></div><button id="show-desktop" aria-label="Show desktop" title="Show desktop"></button></footer>
 </div>
+<template id="wordpad-file"><button data-wordpad="new">New…<span>Ctrl+N</span></button><button data-open="about">Open About Me.doc</button><button data-open="blog">Open Blog</button><button data-open="projects">Open Projects</button><button data-wordpad="save">Save As…<span>Ctrl+S</span></button><hr/><button data-print>Print…<span>Ctrl+P</span></button><button data-print>Print Preview</button><hr/><button data-close-document>Exit</button></template>
+<template id="wordpad-edit"><button data-wordpad="undo">Undo<span>Ctrl+Z</span></button><button data-wordpad="redo">Redo<span>Ctrl+Y</span></button><hr/><button data-wordpad="cut">Cut<span>Ctrl+X</span></button><button data-wordpad="copy">Copy<span>Ctrl+C</span></button><button data-wordpad="paste">Paste<span>Ctrl+V</span></button><hr/><button data-wordpad="selectAll">Select All<span>Ctrl+A</span></button><hr/><button data-find>Find…<span>Ctrl+F</span></button></template>
+<template id="wordpad-view"><button data-view-toggle=".wordpad-toolbar" aria-checked="true">Toolbar</button><button data-view-toggle=".wordpad-format" aria-checked="true">Format Bar</button><button data-view-toggle=".ruler" aria-checked="true">Ruler</button><button data-view-toggle="#document-window .statusbar" aria-checked="true">Status Bar</button></template>
+<template id="wordpad-insert"><button data-wordpad="date">Date and Time…</button></template>
+<template id="wordpad-format"><button data-wordpad="bold">Bold<span>Ctrl+B</span></button><button data-wordpad="italic">Italic<span>Ctrl+I</span></button><button data-wordpad="underline">Underline<span>Ctrl+U</span></button><hr/><button data-wordpad="insertUnorderedList">Bullet Style</button></template>
+<template id="wordpad-help"><button data-help>Help Topics</button><hr/><button data-display-properties>Display Properties…</button></template>
 <template id="skin-about"><h1>About</h1><Biography /></template>
 <template id="skin-projects"><h1>Projects</h1>{projects.map(project => <section><h2>{project.name}</h2><p>{project.description}</p><div class="project-destinations">{project.links.map(link => <a href={link.href}>{link.brand === 'homebrew' ? 'Homebrew' : link.brand === 'pypi' ? 'PyPI' : 'GitHub'}</a>)}</div></section>)}</template>
 <template id="skin-blog"><h1>Blog</h1><ul>{posts.map(post => <li><a href={`/blog/${post.id}`}>{post.data.title}</a><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})}</time></li>)}</ul></template>

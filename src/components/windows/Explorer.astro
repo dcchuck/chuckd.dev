@@ -1,0 +1,48 @@
+---
+import Icon from './Icon.astro';
+import { projects } from '../../data/projects';
+import { getCollection } from 'astro:content';
+const posts=(await getCollection('blog',({data})=>!data.draft)).sort((a,b)=>b.data.date.getTime()-a.data.date.getTime());
+---
+<section id="explorer-window" data-managed-window data-app-title="Documents" class="classic-window desktop-app" aria-label="Windows Explorer" hidden>
+  <div class="titlebar"><Icon name="folder" size={16}/><strong id="explorer-title">Documents</strong><div class="window-controls"><button data-window="minimize" aria-label="Minimize Explorer"></button><button data-window="maximize" aria-label="Maximize Explorer"></button><button data-window="close" aria-label="Close Explorer"></button></div></div>
+  <div class="explorer-address">
+    <button data-explorer-back aria-label="Back" title="Back" disabled><Icon name="nav-back"/></button>
+    <button data-explorer-forward aria-label="Forward" title="Forward" disabled><Icon name="nav-forward"/></button>
+    <div class="explorer-breadcrumb"><span id="explorer-crumb-icon" class="win-icon i-folder-16" aria-hidden="true"></span><span id="explorer-crumbs"></span></div>
+    <label class="explorer-find"><input id="explorer-search" type="search" aria-label="Search folder" placeholder="Search Documents"/><Icon name="t-search"/></label>
+  </div>
+  <nav class="app-menubar wordpad-menu" aria-label="Explorer menus"><button data-menu="explorer-file"><u>F</u>ile</button><button data-menu="explorer-view"><u>V</u>iew</button><button data-menu="explorer-tools"><u>T</u>ools</button><button data-menu="explorer-help"><u>H</u>elp</button></nav>
+  <div class="explorer-command">
+    <button data-menu="explorer-file">Organize<Icon name="t-drop"/></button>
+    <button data-explorer-open disabled>Open</button>
+    <button data-display-properties>Control Panel</button>
+    <span></span>
+    <button data-explorer-view aria-label="Change your view" title="Change your view"><Icon name="t-views"/></button>
+    <button data-help aria-label="Help" title="Help"><Icon name="t-help"/></button>
+  </div>
+  <div class="explorer-workspace">
+    <nav class="explorer-tree" aria-label="Folder navigation">
+      <button data-folder="computer"><Icon name="computer" size={16}/>Computer</button>
+      <button data-folder="documents" class="tree-child"><Icon name="folder" size={16}/>Documents</button>
+      <button data-folder="projects" class="tree-child"><Icon name="folder" size={16}/>Projects</button>
+      <button data-folder="blog" class="tree-child"><Icon name="folder" size={16}/>Blog</button>
+      <button data-folder="recycle"><Icon name="recycle" size={16}/>Recycle Bin</button>
+    </nav>
+    <div class="explorer-main">
+      <header><h2 id="explorer-heading">Documents</h2><span>Arrange by: <b>Folder</b></span></header>
+      <div class="explorer-columns"><span>Name</span><span>Type</span></div>
+      <div id="explorer-files" role="listbox" aria-label="Files" tabindex="0"></div>
+    </div>
+  </div>
+  <div class="explorer-details"><span id="explorer-detail-icon" class="win-icon i-folder-32" aria-hidden="true"></span><span id="explorer-description">Select an item to view its details.</span></div>
+</section>
+<template id="explorer-file"><button data-explorer-open>Open</button><hr/><button data-window-close="explorer-window">Close</button></template>
+<template id="explorer-view"><button data-explorer-view="large">Large Icons</button><button data-explorer-view="details">Details</button></template>
+<template id="explorer-tools"><button data-display-properties>Folder Options…</button></template>
+<template id="explorer-help"><button data-help>Help Topics</button></template>
+<template id="folder-computer"><button role="option" aria-selected="false" data-folder="documents"><Icon name="drive" size={16}/><Icon name="drive"/><span>Local Disk (C:)</span><small>Local Disk</small></button><button role="option" aria-selected="false" data-folder="recycle"><Icon name="recycle" size={16}/><Icon name="recycle"/><span>Recycle Bin</span><small>System Folder</small></button></template>
+<template id="folder-documents"><button role="option" aria-selected="false" data-folder="projects"><Icon name="folder" size={16}/><Icon name="folder"/><span>Projects</span><small>File folder</small></button><button role="option" aria-selected="false" data-folder="blog"><Icon name="folder" size={16}/><Icon name="folder"/><span>Blog</span><small>File folder</small></button><button role="option" aria-selected="false" data-file-about><Icon name="document" size={16}/><Icon name="document"/><span>About Me.doc</span><small>Rich Text Document</small></button></template>
+<template id="folder-projects">{projects.map(p=><button role="option" aria-selected="false" data-project-file={p.name}><Icon name="text" size={16}/><Icon name="text"/><span>{p.name}.txt</span><small>Text Document</small></button>)}</template>
+<template id="folder-blog">{posts.map(p=><button role="option" aria-selected="false" data-post-url={`/blog/${p.id}`}><Icon name="document" size={16}/><Icon name="document"/><span>{p.data.title}</span><small>Blog post</small></button>)}</template>
+<template id="folder-recycle"></template>
